@@ -23,7 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/material.scss",
+              "node_modules/ng-pick-datetime/assets/style/picker.min.css",
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -72,7 +74,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              "src/material.scss",
+              "node_modules/ng-pick-datetime/assets/style/picker.min.css",
+              "src/styles.scss"
             ],
             "scripts": [],
             "assets": [
@@ -123,5 +127,14 @@
       }
     }
   },
-  "defaultProject": "simplescrobble"
+  "defaultProject": "simplescrobble",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "app",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
 }

@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  & ::ng-deep {
+    mat-toolbar .mat-button-wrapper {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+img {
+  border-radius: 100%;
+  margin: 1em 1em 1em 0;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

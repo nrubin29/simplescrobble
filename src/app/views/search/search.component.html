@@ -1,0 +1,14 @@
+<form #form="ngForm" [formGroup]="formGroup" (submit)="submit(form)">
+  <mat-form-field color="accent">
+    <input matInput formControlName="query" type="text" placeholder="Query">
+  </mat-form-field>
+  <button type="submit" mat-raised-button color="accent">Submit</button>
+</form>
+<mat-nav-list *ngIf="results.length > 0">
+  <h3 mat-subheader>Results</h3>
+  <mat-list-item *ngFor="let result of results" (click)="click(result)">
+    <img mat-list-avatar [src]="img(result)" />
+    <h4 mat-line>{{result.name}} <span style="color: gray">- {{result.artist.name}}</span></h4>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+</mat-nav-list>
