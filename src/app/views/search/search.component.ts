@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = new FormGroup({
-      query: new FormControl('A Lack of Color'),
+      query: new FormControl(''),
     });
     this.results = [];
   }

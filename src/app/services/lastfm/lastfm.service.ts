@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class LastfmService {
-  private base = 'http://ws.audioscrobbler.com/2.0/';
+  private base = 'https://ws.audioscrobbler.com/2.0/';
   onAuth: Subject<void>;
 
   constructor(private httpClient: HttpClient) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import env from '../../../../env';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,6 @@ export class LoginComponent implements OnInit {
   }
 
   click() {
-    location.href = `http://www.last.fm/api/auth/?api_key=${env.apiKey}&cb=${encodeURIComponent('http://localhost:4200/callback')}`;
+    location.href = `http://www.last.fm/api/auth/?api_key=${env.apiKey}&cb=${encodeURIComponent(`${environment.baseUrl}/callback`)}`;
   }
 }
