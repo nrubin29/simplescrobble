@@ -8,7 +8,7 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatInputModule,
-  MatListModule, MatMenuModule,
+  MatListModule, MatMenuModule, MatPaginatorModule, MatProgressSpinnerModule, MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import { ScrobbleComponent } from './views/scrobble/scrobble.component';
@@ -44,7 +44,10 @@ import { HomeComponent } from './views/home/home.component';
     MatCheckboxModule,
     MatCardModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

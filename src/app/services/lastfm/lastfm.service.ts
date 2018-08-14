@@ -42,7 +42,7 @@ export class LastfmService {
   }
 
   async search(q: string): Promise<Track[]> {
-    const trackMatches = await this.httpClient.get<TrackSearchResponse>(this.buildURL('track.search', {track: q, limit: '10'}, ['track'])).toPromise();
+    const trackMatches = await this.httpClient.get<TrackSearchResponse>(this.buildURL('track.search', {track: q, limit: '100'}, ['track'])).toPromise();
     const tracks: Track[] = [];
 
     for (const trackMatch of trackMatches.results.trackmatches.track) {

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { LastfmService } from '../../services/lastfm/lastfm.service';
 import * as moment from 'moment';
 import { SelectionService } from '../../services/selection/selection.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-scrobble',
@@ -12,7 +13,7 @@ import { SelectionService } from '../../services/selection/selection.service';
 export class ScrobbleComponent implements OnInit {
   formGroup: FormGroup;
 
-  constructor(private lastfmService: LastfmService, private selectionService: SelectionService) { }
+  constructor(private lastfmService: LastfmService, private selectionService: SelectionService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.formGroup = new FormGroup({
@@ -34,7 +35,11 @@ export class ScrobbleComponent implements OnInit {
 
   submit(form: NgForm) {
     this.lastfmService.scrobble(form.value, form.value.custom ? moment(form.value.timestamp).unix() : moment().unix()).then(data => {
-      alert(data.scrobbles['@attr'].accepted > 0 ? 'Success!' : 'Failed.');
+      this.snackBar.open(data.scrobbles['@attr'].accepted > 0 ? 'Success!' : 'Failed.', undefined, {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      });
     });
   }
 }
