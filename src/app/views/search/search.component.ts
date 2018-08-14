@@ -1,8 +1,8 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { LastfmService } from '../../services/lastfm/lastfm.service';
 import { SelectionService } from '../../services/selection/selection.service';
-import { PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-search',
@@ -11,10 +11,11 @@ import { PageEvent } from '@angular/material';
 })
 export class SearchComponent implements OnInit {
   formGroup: FormGroup;
-  results: Track[];
+  results: Track[]; // TODO: Perhaps use a better structure than an array to support things like jumping through pages.
   pageEvent: PageEvent;
   loading: boolean;
   @ViewChildren('navList', { read: ElementRef }) navList: QueryList<ElementRef>;
+  @ViewChildren(MatPaginator) paginator: QueryList<MatPaginator>;
 
   constructor(private lastfmService: LastfmService, private selectionService: SelectionService) { }
 
@@ -34,22 +35,38 @@ export class SearchComponent implements OnInit {
     return this.results.slice(this.pageEvent.pageIndex * this.pageEvent.pageSize, (this.pageEvent.pageIndex + 1) * this.pageEvent.pageSize);
   }
 
-  submit(form: NgForm) {
+  submit() {
     this.results = [];
+    this.loadData();
+  }
+
+  loadData() {
     this.loading = true;
-    this.lastfmService.search(form.value.query).then(data => {
+    this.lastfmService.search(this.formGroup.getRawValue().query, this.pageEvent.pageSize, this.pageEvent.pageIndex + 1).then(searchedTracks => {
       this.loading = false;
-      this.results = data;
-      this.pageEvent = {...this.pageEvent, length: data.length};
+      this.results = this.results.concat(searchedTracks.tracks);
+      // this.pageEvent = {...this.pageEvent, length: searchedTracks.count};
+
+      this.paginator.changes.subscribe((lst: QueryList<MatPaginator>) => {
+        if (lst.length > 0) {
+          lst.first.length = searchedTracks.count;
+        }
+      });
 
       this.navList.changes.subscribe((lst: QueryList<ElementRef>) => {
-        lst.first.nativeElement.scrollTop = 0;
+        if (lst.length > 0) {
+          lst.first.nativeElement.scrollTop = 0;
+        }
       });
     });
   }
 
   onPage(event: PageEvent) {
     this.pageEvent = event;
+
+    if (this.results.length <= (event.pageIndex + 1) * event.pageSize) {
+      this.loadData();
+    }
   }
 
   click(result: Track) {

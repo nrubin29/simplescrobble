@@ -69,10 +69,23 @@ interface User {
 
 interface TrackSearchResponse {
   results: {
+    opensearch: {
+      '#text': string;
+      role: 'request';
+      startPage: string;
+    };
+    'opensearch:itemsPerPage': string;
+    'opensearch:startIndex': string;
+    'opensearch:totalResults': string;
     trackmatches: {
       track: TrackMatch[];
     };
   };
+}
+
+interface SearchedTracks {
+  tracks: Track[];
+  count: number;
 }
 
 interface TrackInfoResponse {

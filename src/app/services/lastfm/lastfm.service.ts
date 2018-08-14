@@ -41,21 +41,18 @@ export class LastfmService {
     }, ['album', 'artist', 'track']), null).toPromise();
   }
 
-  async search(q: string): Promise<Track[]> {
-    const trackMatches = await this.httpClient.get<TrackSearchResponse>(this.buildURL('track.search', {track: q, limit: '100'}, ['track'])).toPromise();
+  async search(q: string, limit: number, page: number): Promise<SearchedTracks> {
+    const trackMatches = await this.httpClient.get<TrackSearchResponse>(this.buildURL('track.search', {track: q, limit: limit.toString(), page: page.toString()}, ['track'])).toPromise();
     const tracks: Track[] = [];
 
     for (const trackMatch of trackMatches.results.trackmatches.track) {
       tracks.push((await this.httpClient.get<TrackInfoResponse>(this.buildURL('track.getInfo', trackMatch.mbid ? {mbid: trackMatch.mbid} : {track: trackMatch.name, artist: trackMatch.artist}, ['track', 'artist'])).toPromise()).track);
     }
 
-    return tracks;
-
-    // return this.httpClient.get<TrackSearchResponse>(this.buildURL('track.search', {track: q, limit: '10'}, ['track'])).toPromise().then(response => {
-    //   return Promise.all(response.results.trackmatches.track.map(trackMatch => {
-    //     return this.httpClient.get<TrackInfoResponse>(this.buildURL('track.getInfo', {track: trackMatch.name, artist: trackMatch.artist}, ['track', 'artist'])).toPromise().then(resp => resp.track);
-    //   }));
-    // });
+    return {
+      tracks: tracks,
+      count: +trackMatches.results['opensearch:totalResults']
+    };
   }
 
   getUserInfo(): Promise<UserResponse> {

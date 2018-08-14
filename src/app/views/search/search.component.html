@@ -1,4 +1,4 @@
-<form #form="ngForm" [formGroup]="formGroup" (submit)="submit(form)">
+<form #form="ngForm" [formGroup]="formGroup" (submit)="submit()">
   <mat-form-field color="accent">
     <input matInput formControlName="query" type="text" placeholder="Query">
   </mat-form-field>
@@ -8,12 +8,11 @@
   <mat-spinner></mat-spinner>
 </div>
 <ng-container *ngIf="results.length > 0">
-  <mat-nav-list #navList>
-    <h3 mat-subheader>Results</h3>
+  <mat-nav-list #navList *ngIf="!loading">
     <mat-list-item *ngFor="let result of filteredResults" (click)="click(result)">
       <img mat-list-avatar [src]="img(result)" />
       <h4 mat-line>{{result.name}} <span style="color: gray">- {{result.artist.name}}</span></h4>
     </mat-list-item>
   </mat-nav-list>
-  <mat-paginator [length]="1000" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPage($event)"></mat-paginator>
+  <mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPage($event)"></mat-paginator>
 </ng-container>
