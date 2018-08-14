@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { LastfmService } from '../../services/lastfm/lastfm.service';
 import { SelectionService } from '../../services/selection/selection.service';
 import { MatPaginator, PageEvent } from '@angular/material';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-search',
@@ -21,7 +22,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = new FormGroup({
-      query: new FormControl('A Lack of Color'),
+      query: new FormControl(environment.testQuery),
     });
     this.results = [];
     this.pageEvent = {
