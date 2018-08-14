@@ -5,6 +5,10 @@ import { SelectionService } from '../../services/selection/selection.service';
 import { MatPaginator, PageEvent } from '@angular/material';
 import { environment } from '../../../environments/environment';
 
+interface TrackData {
+  [page: number]: Track[];
+}
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -12,7 +16,7 @@ import { environment } from '../../../environments/environment';
 })
 export class SearchComponent implements OnInit {
   formGroup: FormGroup;
-  results: Track[]; // TODO: Perhaps use a better structure than an array to support things like jumping through pages.
+  results: TrackData;
   pageEvent: PageEvent;
   loading: boolean;
   @ViewChildren('navList', { read: ElementRef }) navList: QueryList<ElementRef>;
@@ -24,7 +28,7 @@ export class SearchComponent implements OnInit {
     this.formGroup = new FormGroup({
       query: new FormControl(environment.testQuery),
     });
-    this.results = [];
+    this.results = {};
     this.pageEvent = {
       pageIndex: 0,
       pageSize: 10,
@@ -32,21 +36,27 @@ export class SearchComponent implements OnInit {
     };
   }
 
-  get filteredResults(): Track[] {
-    return this.results.slice(this.pageEvent.pageIndex * this.pageEvent.pageSize, (this.pageEvent.pageIndex + 1) * this.pageEvent.pageSize);
+  get currentResults(): Track[] {
+    return this.results[this.pageEvent.pageIndex];
+  }
+
+  get hasResults() {
+    return Object.keys(this.results).length > 0;
   }
 
   submit() {
-    this.results = [];
+    this.results = {};
     this.loadData();
   }
 
   loadData() {
+    // We need to save a copy of the current pageEvent in case the user navigates before the search callback finishes.
+    const page = Object.assign({}, this.pageEvent);
     this.loading = true;
-    this.lastfmService.search(this.formGroup.getRawValue().query, this.pageEvent.pageSize, this.pageEvent.pageIndex + 1).then(searchedTracks => {
+    this.lastfmService.search(this.formGroup.getRawValue().query, page.pageSize, page.pageIndex + 1).then(searchedTracks => {
       this.loading = false;
-      this.results = this.results.concat(searchedTracks.tracks);
-      // this.pageEvent = {...this.pageEvent, length: searchedTracks.count};
+      this.results[page.pageIndex] = searchedTracks.tracks;
+      console.log(this.results);
 
       this.paginator.changes.subscribe((lst: QueryList<MatPaginator>) => {
         if (lst.length > 0) {
@@ -65,7 +75,7 @@ export class SearchComponent implements OnInit {
   onPage(event: PageEvent) {
     this.pageEvent = event;
 
-    if (this.results.length <= (event.pageIndex + 1) * event.pageSize) {
+    if (!(event.pageIndex in this.results)) {
       this.loadData();
     }
   }

@@ -7,9 +7,9 @@
 <div class="loading-wrapper" *ngIf="loading">
   <mat-spinner></mat-spinner>
 </div>
-<ng-container *ngIf="results.length > 0">
+<ng-container *ngIf="hasResults">
   <mat-nav-list #navList *ngIf="!loading">
-    <mat-list-item *ngFor="let result of filteredResults" (click)="click(result)">
+    <mat-list-item *ngFor="let result of currentResults" (click)="click(result)">
       <img mat-list-avatar [src]="img(result)" />
       <h4 mat-line>{{result.name}} <span style="color: gray">- {{result.artist.name}}</span></h4>
     </mat-list-item>
