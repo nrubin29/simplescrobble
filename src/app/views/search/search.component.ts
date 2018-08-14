@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LastfmService } from '../../services/lastfm/lastfm.service';
 import { SelectionService } from '../../services/selection/selection.service';
@@ -20,7 +20,8 @@ export class SearchComponent implements OnInit {
   pageEvent: PageEvent;
   loading: boolean;
   @ViewChildren('navList', { read: ElementRef }) navList: QueryList<ElementRef>;
-  @ViewChildren(MatPaginator) paginator: QueryList<MatPaginator>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  previousPageSize: number;
 
   constructor(private lastfmService: LastfmService, private selectionService: SelectionService) { }
 
@@ -34,6 +35,7 @@ export class SearchComponent implements OnInit {
       pageSize: 10,
       length: 0
     };
+    this.previousPageSize = 10;
   }
 
   get currentResults(): Track[] {
@@ -49,34 +51,38 @@ export class SearchComponent implements OnInit {
     this.loadData();
   }
 
-  loadData() {
+  async loadData() {
     // We need to save a copy of the current pageEvent in case the user navigates before the search callback finishes.
     const page = Object.assign({}, this.pageEvent);
     this.loading = true;
-    this.lastfmService.search(this.formGroup.getRawValue().query, page.pageSize, page.pageIndex + 1).then(searchedTracks => {
-      this.loading = false;
-      this.results[page.pageIndex] = searchedTracks.tracks;
-      console.log(this.results);
 
-      this.paginator.changes.subscribe((lst: QueryList<MatPaginator>) => {
-        if (lst.length > 0) {
-          lst.first.length = searchedTracks.count;
-        }
-      });
+    const searchedTracks = await this.lastfmService.search(this.formGroup.getRawValue().query, page.pageSize, page.pageIndex + 1);
+    this.results[page.pageIndex] = searchedTracks.tracks;
 
-      this.navList.changes.subscribe((lst: QueryList<ElementRef>) => {
-        if (lst.length > 0) {
-          lst.first.nativeElement.scrollTop = 0;
-        }
-      });
+    this.paginator.length = searchedTracks.count;
+    this.loading = false;
+
+    this.navList.changes.subscribe((lst: QueryList<ElementRef>) => {
+      if (lst.length > 0) {
+        lst.first.nativeElement.scrollTop = 0;
+      }
     });
   }
 
-  onPage(event: PageEvent) {
+  async onPage(event: PageEvent) {
     this.pageEvent = event;
 
-    if (!(event.pageIndex in this.results)) {
-      this.loadData();
+    if (event.pageSize !== this.previousPageSize) {
+      this.results = {};
+      this.paginator.pageIndex = 0;
+      this.pageEvent = {...this.pageEvent, pageIndex: 0};
+      await this.loadData();
+    }
+
+    this.previousPageSize = event.pageSize;
+
+    if (event.pageSize === this.previousPageSize && !(event.pageIndex in this.results)) {
+      await this.loadData();
     }
   }
 
