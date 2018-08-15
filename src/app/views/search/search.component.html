@@ -12,7 +12,9 @@
     <mat-list-item *ngFor="let result of currentResults" (click)="click(result)">
       <img mat-list-avatar [src]="img(result)" />
       <h4 mat-line>{{result.name}} <span style="color: gray">- {{result.artist.name}}</span></h4>
-      <a [href]="link(result)" target="_blank" style="float: right; color: gray"><mat-icon>info</mat-icon></a>
+      <a *ngIf="result.url" [href]="result.url" target="_blank" style="float: right; color: gray">
+        <mat-icon>info</mat-icon>
+      </a>
     </mat-list-item>
   </mat-nav-list>
 </ng-container>
