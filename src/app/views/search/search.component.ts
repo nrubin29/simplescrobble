@@ -91,6 +91,6 @@ export class SearchComponent implements OnInit {
   }
 
   img(result: Track) {
-    return result.album ? result.album.image[0]['#text'] : '';
+    return result.album ? result.album.image[0]['#text'] : 'https://lastfm-img2.akamaized.net/i/u/34s/4128a6eb29f94943c9d206c08e625904';
   }
 }
