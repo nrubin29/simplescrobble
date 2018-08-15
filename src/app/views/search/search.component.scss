@@ -21,6 +21,10 @@ mat-nav-list {
   overflow-y: scroll;
 }
 
+mat-list-item:not(:hover) a {
+  display: none;
+}
+
 button {
   margin-left: 1em;
 }
