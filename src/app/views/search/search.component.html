@@ -1,4 +1,9 @@
 <form #form="ngForm" [formGroup]="formGroup" (submit)="submit()">
+  <mat-form-field>
+    <mat-select formControlName="type" placeholder="Search type">
+      <mat-option *ngFor="let type of ['Song', 'Album', 'Artist']" [value]="type.toLowerCase()">{{type}}</mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-form-field color="accent">
     <input matInput formControlName="query" type="text" placeholder="Query">
   </mat-form-field>
@@ -8,11 +13,8 @@
   <mat-spinner></mat-spinner>
 </div>
 <ng-container *ngIf="hasResults">
-  <mat-nav-list #navList *ngIf="!loading">
-    <mat-list-item *ngFor="let result of currentResults" (click)="click(result)">
-      <img mat-list-avatar [src]="img(result)" />
-      <h4 mat-line>{{result.name}} <span style="color: gray">- {{result.artist.name}}</span></h4>
-    </mat-list-item>
-  </mat-nav-list>
+  <!-- *ngIf="viewType === 'list'" -->
+  <app-list-view [currentResults]="currentResults" (click)="click($event)"></app-list-view>
+  <!--<app-grid-view *ngIf="viewType === 'grid'" [currentResults]="currentResults" (click)="click($event)"></app-grid-view>-->
 </ng-container>
 <mat-paginator [hidden]="!hasResults || loading" [length]="0" [pageSize]="10" (page)="onPage($event)"></mat-paginator>

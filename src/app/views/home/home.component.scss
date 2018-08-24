@@ -2,8 +2,11 @@
   height: 100%;
   width: 100%;
   display: flex;
-}
 
-* {
-  width: 50vw;
+  & ::ng-deep {
+    & > *:not(router-outlet) {
+      width: 50vw;
+      min-width: 50vw;
+    }
+  }
 }

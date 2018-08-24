@@ -41,22 +41,71 @@ export class LastfmService {
     }, ['album', 'artist', 'track']), null).toPromise();
   }
 
-  async search(q: string, limit: number, page: number): Promise<SearchedTracks> {
+  search(type: 'song' | 'artist' | 'album', q: string, limit: number, page: number): Promise<SearchResult<Entity>> {
+    if (type === 'song') {
+      return this.searchTracks(q, limit, page);
+    }
+
+    else if (type === 'album') {
+      return this.searchAlbums(q, limit, page);
+    }
+
+    else if (type === 'artist') {
+      return this.searchArtists(q, limit, page);
+    }
+  }
+
+  async searchTracks(q: string, limit: number, page: number): Promise<SearchResult<Track>> {
     const trackMatches = await this.httpClient.get<TrackSearchResponse>(this.buildURL('track.search', {track: q, limit: limit.toString(), page: page.toString()}, ['track'])).toPromise();
     const tracks: Track[] = [];
 
     for (const trackMatch of trackMatches.results.trackmatches.track) {
-      tracks.push((await this.httpClient.get<TrackInfoResponse>(this.buildURL('track.getInfo', trackMatch.mbid ? {mbid: trackMatch.mbid} : {track: trackMatch.name, artist: trackMatch.artist}, ['track', 'artist'])).toPromise()).track);
+      tracks.push({...(await this.httpClient.get<TrackInfoResponse>(this.buildURL('track.getInfo', trackMatch.mbid ? {mbid: trackMatch.mbid} : {track: trackMatch.name, artist: trackMatch.artist}, ['track', 'artist'])).toPromise()).track, type: 'song'});
     }
 
     return {
-      tracks: tracks,
-      count: +trackMatches.results['opensearch:totalResults']
+      count: +trackMatches.results['opensearch:totalResults'],
+      results: tracks
     };
   }
 
-  getUserInfo(): Promise<UserResponse> {
-    return localStorage.getItem('name') ? this.httpClient.get<UserResponse>(this.buildURL('user.getInfo', {user: localStorage.getItem('name')})).toPromise() : Promise.reject('');
+  async searchAlbums(q: string, limit: number, page: number): Promise<SearchResult<any>> {
+    const albumMatches = await this.httpClient.get<AlbumSearchResponse>(this.buildURL('album.search', {album: q, limit: limit.toString(), page: page.toString()}, ['album'])).toPromise();
+
+    return {
+      count: +albumMatches.results['opensearch:totalResults'],
+      results: albumMatches.results.albummatches.album.map(albumMatch => ({...albumMatch, type: 'album'}))
+    };
+  }
+
+  async searchArtists(q: string, limit: number, page: number): Promise<SearchResult<any>> {
+    const artistMatches = await this.httpClient.get<ArtistSearchResponse>(this.buildURL('artist.search', {artist: q, limit: limit.toString(), page: page.toString()}, ['artist'])).toPromise();
+
+    return {
+      count: +artistMatches.results['opensearch:totalResults'],
+      results: artistMatches.results.artistmatches.artist.map(artistMatch => ({...artistMatch, type: 'artist'}))
+    };
+  }
+
+  async getArtist(name: string): Promise<Artist> {
+    const artistInfo = await this.httpClient.get<ArtistInfoResponse>(this.buildURL('artist.getInfo', {artist: name}, ['artist'])).toPromise();
+    const topAlbumInfo = await this.httpClient.get<TopAlbumsResponse>(this.buildURL('artist.getTopAlbums', {artist: name},['artist'])).toPromise();
+    return {...artistInfo.artist, albums: topAlbumInfo.topalbums.album.map(album => ({...album, type: 'album'})), type: 'artist'};
+  }
+
+  async getAlbum(artist: string, name: string): Promise<Album> {
+    const albumInfo = await this.httpClient.get<AlbumInfoResponse>(this.buildURL('album.getInfo', {artist, album: name})).toPromise();
+    return {...albumInfo.album, type: 'album'};
+  }
+
+  async getUserInfo(): Promise<UserResponse> {
+    if (localStorage.getItem('name')) {
+      const userResponse = await this.httpClient.get<UserResponse>(this.buildURL('user.getInfo', {user: localStorage.getItem('name')})).toPromise();
+      userResponse.user = {...userResponse.user, type: 'user'};
+      return userResponse;
+    }
+
+    throw new Error('No user data.');
   }
 }
 

@@ -1,0 +1,10 @@
+<div class="grid-list">
+  <div class="grid-tile" *ngFor="let result of currentResults" [ngStyle]="{'background-image': img(result)}" (click)="onClick(result)">
+    <div class="grid-footer"><h4><b>{{result.name}}</b><span *ngIf="getDescriptor(result)"> - {{getDescriptor(result)}}</span></h4></div>
+  </div>
+</div>
+<!--<mat-grid-list cols="3" #gridList>-->
+  <!--<mat-grid-tile *ngFor="let result of currentResults" [ngStyle]="{'background-image': img(result)}" (click)="onClick(result)">-->
+    <!--<mat-grid-tile-footer><h4><b>{{result.name}}</b><span *ngIf="getDescriptor(result)"> - {{getDescriptor(result)}}</span></h4></mat-grid-tile-footer>-->
+  <!--</mat-grid-tile>-->
+<!--</mat-grid-list>-->

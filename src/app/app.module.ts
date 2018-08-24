@@ -6,9 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatCardModule,
-  MatCheckboxModule,
+  MatCheckboxModule, MatGridListModule, MatIconModule,
   MatInputModule,
-  MatListModule, MatMenuModule, MatPaginatorModule, MatProgressSpinnerModule, MatSnackBarModule,
+  MatListModule, MatMenuModule, MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import { ScrobbleComponent } from './views/scrobble/scrobble.component';
@@ -20,6 +20,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './views/search/search.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { HomeComponent } from './views/home/home.component';
+import { ListViewComponent } from './components/list-view/list-view.component';
+import { GridViewComponent } from './components/grid-view/grid-view.component';
+import { ArtistComponent } from './views/artist/artist.component';
+import { AlbumComponent } from './views/album/album.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { HomeComponent } from './views/home/home.component';
     LoginComponent,
     CallbackComponent,
     SearchComponent,
-    HomeComponent
+    HomeComponent,
+    ListViewComponent,
+    GridViewComponent,
+    ArtistComponent,
+    AlbumComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +55,10 @@ import { HomeComponent } from './views/home/home.component';
     MatMenuModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

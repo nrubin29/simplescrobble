@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+}
+
+mat-card {
+  margin: 1em;
+}
+
+a, img {
+  margin-right: 1em;
+}
+
+app-list-view {
+  flex: 1;
+}
+
+// Hotfix for title being vertically misaligned.
+.mat-card-content>:last-child:not(.mat-card-footer), .mat-card>:last-child:not(.mat-card-footer) {
+  margin: auto 0;
+}

@@ -1,8 +1,3 @@
-type Images = {
-  '#text': string;
-  size: 'small' | 'medium' | 'large' | 'extralarge';
-}[];
-
 interface TrackMatch {
   name: string;
   artist: string | any;
@@ -17,6 +12,7 @@ interface TrackMatch {
 }
 
 interface Track extends TrackMatch {
+  type: 'song';
   id?: string;
   duration: string;
   playcount: string;
@@ -48,25 +44,6 @@ interface Track extends TrackMatch {
   };
 }
 
-interface User {
-  id: string;
-  name: string;
-  realname: string;
-  url: string;
-  image: Images;
-  country: string;
-  age: string;
-  gender: 'm' | 'f';
-  subscriber: '0' | '1';
-  playcount: string;
-  playlists: string;
-  bootstrap: string;
-  registered: {
-    unixtime: string;
-    '#text': string;
-  };
-}
-
 interface TrackSearchResponse {
   results: {
     opensearch: {
@@ -83,47 +60,6 @@ interface TrackSearchResponse {
   };
 }
 
-interface SearchedTracks {
-  tracks: Track[];
-  count: number;
-}
-
 interface TrackInfoResponse {
   track: Track;
-}
-
-interface AuthenticationResponse {
-  session: {
-    name: string;
-    key: string;
-  };
-}
-
-interface CorrectedObject {
-  corrected: '0' | '1';
-  '#text': string;
-}
-
-interface ScrobbleResponse {
-  scrobbles: {
-    '@attr': {
-      accepted: number;
-      ignored: number;
-    };
-    scrobble: {
-      album: CorrectedObject;
-      albumArtist: CorrectedObject;
-      artist: CorrectedObject;
-      ignoredMessage: {
-        code: string;
-        '#text': string;
-      };
-      timestamp: string;
-      track: CorrectedObject;
-    };
-  };
-}
-
-interface UserResponse {
-  user: User;
 }

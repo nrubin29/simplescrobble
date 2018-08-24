@@ -4,10 +4,7 @@ import { LastfmService } from '../../services/lastfm/lastfm.service';
 import { SelectionService } from '../../services/selection/selection.service';
 import { MatPaginator, PageEvent } from '@angular/material';
 import { environment } from '../../../environments/environment';
-
-interface TrackData {
-  [page: number]: Track[];
-}
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -16,20 +13,25 @@ interface TrackData {
 })
 export class SearchComponent implements OnInit {
   formGroup: FormGroup;
-  results: TrackData;
-  pageEvent: PageEvent;
+  results: PaginatedData<Entity>;
+  viewType: string;
   loading: boolean;
-  @ViewChildren('navList', { read: ElementRef }) navList: QueryList<ElementRef>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  pageEvent: PageEvent;
   previousPageSize: number;
 
-  constructor(private lastfmService: LastfmService, private selectionService: SelectionService) { }
+  @ViewChildren('navList', { read: ElementRef }) navList: QueryList<ElementRef>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(private lastfmService: LastfmService, private selectionService: SelectionService, private router: Router) { }
 
   ngOnInit() {
     this.formGroup = new FormGroup({
-      query: new FormControl(environment.testQuery),
+      type: new FormControl('song'),
+      query: new FormControl(environment.testQuery)
     });
     this.results = {};
+    this.viewType = 'list';
     this.pageEvent = {
       pageIndex: 0,
       pageSize: 10,
@@ -38,7 +40,7 @@ export class SearchComponent implements OnInit {
     this.previousPageSize = 10;
   }
 
-  get currentResults(): Track[] {
+  get currentResults(): Entity[] {
     return this.results[this.pageEvent.pageIndex];
   }
 
@@ -48,18 +50,19 @@ export class SearchComponent implements OnInit {
 
   submit() {
     this.results = {};
+    this.viewType = this.formGroup.getRawValue().type === 'song' ? 'list' : 'grid';
     this.loadData();
   }
 
   async loadData() {
     // We need to save a copy of the current pageEvent in case the user navigates before the search callback finishes.
-    const page = Object.assign({}, this.pageEvent);
+    const page = {...this.pageEvent};
     this.loading = true;
 
-    const searchedTracks = await this.lastfmService.search(this.formGroup.getRawValue().query, page.pageSize, page.pageIndex + 1);
-    this.results[page.pageIndex] = searchedTracks.tracks;
+    const searchResults = await this.lastfmService.search(this.formGroup.getRawValue().type, this.formGroup.getRawValue().query, page.pageSize, page.pageIndex + 1);
+    this.results[page.pageIndex] = searchResults.results;
 
-    this.paginator.length = searchedTracks.count;
+    this.paginator.length = searchResults.count;
     this.loading = false;
 
     this.navList.changes.subscribe((lst: QueryList<ElementRef>) => {
@@ -86,11 +89,21 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  click(result: Track) {
-    this.selectionService.selectedSong.next(result);
-  }
+  click(result: Entity) {
+    if (result instanceof MouseEvent) {
+      return;
+    }
 
-  img(result: Track) {
-    return result.album ? result.album.image[0]['#text'] : '';
+    if (result.type === 'song') {
+      this.selectionService.selectedSong.next(result);
+    }
+
+    else if (result.type === 'artist') {
+      this.router.navigate(['/home', 'artist', result.name]);
+    }
+
+    else if (result.type === 'album') {
+      this.router.navigate(['/home', 'album', result.artist, result.name]);
+    }
   }
 }

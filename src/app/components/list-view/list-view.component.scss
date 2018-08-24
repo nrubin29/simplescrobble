@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+}
+
+mat-nav-list {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.num {
+  text-align: center;
+  margin-bottom: -5px;
+}
