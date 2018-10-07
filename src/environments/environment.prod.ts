@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://simplescrobble.nrubintech.com',
+  baseUrl: 'https://simplescrobble.com',
   testQuery: ''
 };
