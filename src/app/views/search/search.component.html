@@ -1,12 +1,12 @@
 <form #form="ngForm" [formGroup]="formGroup" (submit)="submit()">
   <mat-button-toggle-group formControlName="type">
-    <mat-button-toggle value="song">
+    <mat-button-toggle matTooltip="Song" value="song">
       <mat-icon>music_note</mat-icon>
     </mat-button-toggle>
-    <mat-button-toggle value="artist">
+    <mat-button-toggle matTooltip="Artist" value="artist">
       <mat-icon>people</mat-icon>
     </mat-button-toggle>
-    <mat-button-toggle value="album">
+    <mat-button-toggle matTooltip="Album" value="album">
       <mat-icon>album</mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>

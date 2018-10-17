@@ -9,7 +9,7 @@ import {
     MatCheckboxModule, MatGridListModule, MatIconModule,
     MatInputModule,
     MatListModule, MatMenuModule, MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule,
-    MatToolbarModule
+    MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import { ScrobbleComponent } from './views/scrobble/scrobble.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -59,7 +59,8 @@ import { AlbumComponent } from './views/album/album.component';
     MatSelectModule,
     MatGridListModule,
     MatIconModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
