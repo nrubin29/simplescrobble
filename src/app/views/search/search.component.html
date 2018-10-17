@@ -1,9 +1,15 @@
 <form #form="ngForm" [formGroup]="formGroup" (submit)="submit()">
-  <mat-form-field>
-    <mat-select formControlName="type" placeholder="Search type">
-      <mat-option *ngFor="let type of ['Song', 'Album', 'Artist']" [value]="type.toLowerCase()">{{type}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <mat-button-toggle-group formControlName="type">
+    <mat-button-toggle value="song">
+      <mat-icon>music_note</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="artist">
+      <mat-icon>people</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="album">
+      <mat-icon>album</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
   <mat-form-field color="accent">
     <input matInput formControlName="query" type="text" placeholder="Query">
   </mat-form-field>

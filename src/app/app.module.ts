@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule,
-  MatCardModule,
-  MatCheckboxModule, MatGridListModule, MatIconModule,
-  MatInputModule,
-  MatListModule, MatMenuModule, MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule,
-  MatToolbarModule
+    MatButtonModule, MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule, MatGridListModule, MatIconModule,
+    MatInputModule,
+    MatListModule, MatMenuModule, MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule,
+    MatToolbarModule
 } from '@angular/material';
 import { ScrobbleComponent } from './views/scrobble/scrobble.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -58,7 +58,8 @@ import { AlbumComponent } from './views/album/album.component';
     MatSnackBarModule,
     MatSelectModule,
     MatGridListModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
