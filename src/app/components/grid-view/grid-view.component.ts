@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import { EntityUtil } from '../../../types/entity-util';
 
 @Component({
@@ -10,10 +10,17 @@ export class GridViewComponent implements OnInit {
   @Input() currentResults: Entity[];
   @Input() descriptor = true;
   @Output() click = new EventEmitter<Entity>();
+  chunk: number;
 
   constructor() { }
 
   ngOnInit() {
+    this.resize({target: window});
+  }
+
+  @HostListener('window:resize', ['$event'])
+  resize(event) {
+    this.chunk = Math.floor(event.target.innerWidth / 150);
   }
 
   onClick(result: Entity) {

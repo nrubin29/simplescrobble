@@ -1,40 +1,80 @@
-.grid-list {
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.grid-tile {
-  flex: 1 0 33%;
-  //height: 200px;
-  width: auto;
-  background-size: cover;
-}
-
-// TODO: This is broken.
-
-
-
 :host {
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
-mat-grid-list {
-  flex: 1;
+.grid-container {
   overflow-y: scroll;
-}
-
-mat-grid-tile {
-  cursor: pointer;
-  background: no-repeat center;
-  background-size: cover; /* Resize the background image to cover the entire container */
-}
-
-h4 {
-  color: white;
-  margin: 0;
   flex: 1;
+  width: 100vw;
 }
 
-// calc(((33.333333333333336% - 0.6666666666666666px) * 1) + 0px)
+.grid-scroll {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100vw;
+}
+
+.grid-cell {
+  display: inline-flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  text-align: center;
+
+  // max-width and min-width are set in the HTML.
+  box-sizing: border-box;
+  padding: 0 0.5rem;
+}
+
+.image {
+  width: 100%;
+  padding-top: 100%; // Maintain aspect ratio
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+//.grid-list {
+//  display: flex;
+//  flex-flow: row wrap;
+//}
+//
+//.grid-tile {
+//  flex: 1 0 33%;
+//  //height: 200px;
+//  width: auto;
+//  background-size: cover;
+//}
+//
+//// TODO: This is broken.
+//
+//
+//
+//:host {
+//  display: flex;
+//  flex-direction: column;
+//  max-height: 100%;
+//}
+//
+//mat-grid-list {
+//  flex: 1;
+//  overflow-y: scroll;
+//}
+//
+//mat-grid-tile {
+//  cursor: pointer;
+//  background: no-repeat center;
+//  background-size: cover; /* Resize the background image to cover the entire container */
+//}
+//
+//h4 {
+//  color: white;
+//  margin: 0;
+//  flex: 1;
+//}
+//
+//// calc(((33.333333333333336% - 0.6666666666666666px) * 1) + 0px)

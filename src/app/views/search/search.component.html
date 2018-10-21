@@ -19,8 +19,7 @@
   <mat-spinner></mat-spinner>
 </div>
 <ng-container *ngIf="hasResults">
-  <!-- *ngIf="viewType === 'list'" -->
-  <app-list-view [currentResults]="currentResults" (click)="click($event)"></app-list-view>
-  <!--<app-grid-view *ngIf="viewType === 'grid'" [currentResults]="currentResults" (click)="click($event)"></app-grid-view>-->
+  <app-list-view *ngIf="viewType === 'list'" [currentResults]="currentResults" (click)="click($event)"></app-list-view>
+  <app-grid-view *ngIf="viewType === 'grid'" [currentResults]="currentResults" (click)="click($event)"></app-grid-view>
 </ng-container>
 <mat-paginator [hidden]="!hasResults || loading" [length]="0" [pageSize]="10" (page)="onPage($event)"></mat-paginator>

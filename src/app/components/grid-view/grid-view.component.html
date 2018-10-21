@@ -1,8 +1,18 @@
-<div class="grid-list">
-  <div class="grid-tile" *ngFor="let result of currentResults" [ngStyle]="{'background-image': img(result)}" (click)="onClick(result)">
-    <div class="grid-footer"><h4><b>{{result.name}}</b><span *ngIf="getDescriptor(result)"> - {{getDescriptor(result)}}</span></h4></div>
+<div class="grid-container">
+  <div class="grid-scroll">
+    <div class="row" *ngFor="let row of currentResults | chunk:chunk">
+      <div class="grid-cell" *ngFor="let result of row" (click)="onClick(result)" [ngStyle]="{'min-width': 'calc(100vw / ' + chunk + ')', 'max-width': 'calc(100vw /' + chunk + ')'}">
+        <div class="image" [ngStyle]="{'background-image': img(result)}"></div>
+        <p>{{result.name}}<span *ngIf="getDescriptor(result)"> - {{getDescriptor(result)}}</span></p>
+      </div>
+    </div>
   </div>
 </div>
+<!--<div class="grid-list">-->
+  <!--<div class="grid-tile" *ngFor="let result of currentResults" [ngStyle]="{'background-image': img(result)}" (click)="onClick(result)">-->
+    <!--<div class="grid-footer"><h4><b>{{result.name}}</b><span *ngIf="getDescriptor(result)"> - {{getDescriptor(result)}}</span></h4></div>-->
+  <!--</div>-->
+<!--</div>-->
 <!--<mat-grid-list cols="3" #gridList>-->
   <!--<mat-grid-tile *ngFor="let result of currentResults" [ngStyle]="{'background-image': img(result)}" (click)="onClick(result)">-->
     <!--<mat-grid-tile-footer><h4><b>{{result.name}}</b><span *ngIf="getDescriptor(result)"> - {{getDescriptor(result)}}</span></h4></mat-grid-tile-footer>-->

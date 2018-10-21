@@ -2,5 +2,4 @@
   <img [src]="img" width="100px" />
   <h1>{{artist.name}}</h1>
 </mat-card>
-<!-- This should use a grid view -->
-<app-list-view [currentResults]="artist.albums" [descriptor]="false" (click)="onClick($event)"></app-list-view>
+<app-grid-view [currentResults]="artist.albums" [descriptor]="false" (click)="onClick($event)"></app-grid-view>

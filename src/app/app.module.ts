@@ -24,6 +24,7 @@ import { GridViewComponent } from './components/grid-view/grid-view.component';
 import { ArtistComponent } from './views/artist/artist.component';
 import { AlbumComponent } from './views/album/album.component';
 import { HeaderComponent } from './components/header/header.component';
+import {ChunkPipe} from './pipes/chunk.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HeaderComponent } from './components/header/header.component';
     GridViewComponent,
     ArtistComponent,
     AlbumComponent,
-    HeaderComponent
+    HeaderComponent,
+    ChunkPipe
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,9 @@ import { HeaderComponent } from './components/header/header.component';
   entryComponents: [
     ScrobbleComponent
   ],
-  providers: [],
+  providers: [
+    ChunkPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
