@@ -8,7 +8,6 @@ import { LastfmService } from '../../services/lastfm/lastfm.service';
   styleUrls: ['./callback.component.scss']
 })
 export class CallbackComponent implements OnInit {
-
   constructor(private lastfmService: LastfmService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -17,7 +16,7 @@ export class CallbackComponent implements OnInit {
         localStorage.setItem('key', data.session.key);
         localStorage.setItem('name', data.session.name);
         this.lastfmService.onAuth.next();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/search']);
       });
     });
   }

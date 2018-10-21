@@ -1,9 +1,8 @@
 <mat-card class="banner">
-  <a mat-fab [routerLink]="['/home']" color="accent"><mat-icon>arrow_back</mat-icon></a>
   <img [src]="img" width="100px" />
   <div>
     <h2>{{album.name}}</h2>
-    <h4><a [routerLink]="['/home', 'artist', album.artist]">{{album.artist}}</a></h4>
+    <h4><a [routerLink]="['/artist', album.artist]">{{album.artist}}</a></h4>
   </div>
 </mat-card>
 <app-list-view [currentResults]="album.tracks.track" [descriptor]="false" [image]="false" (click)="onClick($event)"></app-list-view>

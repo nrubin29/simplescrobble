@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   max-height: 100%;
-  padding: 1em;
 
   &::ng-deep mat-spinner {
     margin: 0 auto;
@@ -17,5 +16,9 @@
 }
 
 mat-form-field {
+  margin-right: 1em;
+}
+
+mat-button-toggle-group {
   margin-right: 1em;
 }

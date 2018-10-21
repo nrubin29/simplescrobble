@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LastfmService } from '../../services/lastfm/lastfm.service';
-import { SelectionService } from '../../services/selection/selection.service';
-import { MatPaginator, PageEvent } from '@angular/material';
+import {MatDialog, MatPaginator, PageEvent} from '@angular/material';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import {ScrobbleComponent} from '../../components/scrobble/scrobble.component';
 
 @Component({
   selector: 'app-search',
@@ -23,7 +23,7 @@ export class SearchComponent implements OnInit {
   @ViewChildren('navList', { read: ElementRef }) navList: QueryList<ElementRef>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private lastfmService: LastfmService, private selectionService: SelectionService, private router: Router) { }
+  constructor(private lastfmService: LastfmService, private matDialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
     this.formGroup = new FormGroup({
@@ -95,15 +95,15 @@ export class SearchComponent implements OnInit {
     }
 
     if (result.type === 'song') {
-      this.selectionService.selectedSong.next(result);
+      this.matDialog.open(ScrobbleComponent, {data: result});
     }
 
     else if (result.type === 'artist') {
-      this.router.navigate(['/home', 'artist', result.name]);
+      this.router.navigate(['artist', result.name]);
     }
 
     else if (result.type === 'album') {
-      this.router.navigate(['/home', 'album', result.artist, result.name]);
+      this.router.navigate(['album', result.artist, result.name]);
     }
   }
 }

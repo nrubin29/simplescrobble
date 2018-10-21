@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EntityUtil } from '../../../types/entity-util';
-import { SelectionService } from '../../services/selection/selection.service';
+import {MatDialog} from '@angular/material';
+import {ScrobbleComponent} from '../../components/scrobble/scrobble.component';
 
 @Component({
   selector: 'app-album',
@@ -11,7 +12,7 @@ import { SelectionService } from '../../services/selection/selection.service';
 export class AlbumComponent implements OnInit {
   album: Album;
 
-  constructor(private selectionService: SelectionService, private route: ActivatedRoute) { }
+  constructor(private matDialog: MatDialog, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -28,6 +29,6 @@ export class AlbumComponent implements OnInit {
       return;
     }
 
-    this.selectionService.selectedSong.next({...track, album: {title: this.album.name}} as any);
+    this.matDialog.open(ScrobbleComponent, {data: {...track, album: {title: this.album.name}}});
   }
 }

@@ -11,7 +11,7 @@ export class RequireNoTokenGuard implements CanActivate {
     const result = localStorage.getItem('key') === null;
 
     if (!result) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/search']);
     }
 
     return result;

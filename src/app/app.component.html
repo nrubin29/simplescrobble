@@ -1,18 +1,4 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <a routerLink="/">simplescrobble</a>
-    <span class="spacer"></span>
-    <ng-container *ngIf="user">
-      <button mat-button [matMenuTriggerFor]="appMenu">
-        <img [src]="user.image[0]['#text']" />
-        <p>Welcome, {{user.name}}</p>
-      </button>
-    </ng-container>
-  </mat-toolbar-row>
-</mat-toolbar>
-<mat-menu #appMenu="matMenu" [overlapTrigger]="false" xPosition="before" yPosition="below">
-  <button mat-menu-item (click)="logOut()">Log Out</button>
-</mat-menu>
+<app-header></app-header>
 <main>
   <router-outlet></router-outlet>
 </main>

@@ -1,0 +1,48 @@
+:host {
+  min-height: 64px;
+  max-width: 100vw;
+  overflow: hidden;
+
+  & ::ng-deep {
+    & .manual-button {
+      min-width: auto;
+    }
+
+    & .user-button {
+      min-width: auto;
+    }
+  }
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+img {
+  border-radius: 100%;
+  display: inline-block;
+  margin: 1em 1em 1em 0;
+}
+
+@media screen and (max-width: 499px) {
+  .welcome {
+    display: none;
+  }
+
+  img {
+    margin: 1em 0;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .welcome-button {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 375px) {
+  .manual-button {
+    margin-left: 1em;
+  }
+}
