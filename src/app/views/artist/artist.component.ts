@@ -15,7 +15,6 @@ export class ArtistComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.artist = data.artist;
-      console.log(this.artist);
     });
   }
 

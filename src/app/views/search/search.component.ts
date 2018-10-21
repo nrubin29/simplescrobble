@@ -13,7 +13,7 @@ import {ScrobbleComponent} from '../../components/scrobble/scrobble.component';
 })
 export class SearchComponent implements OnInit {
   formGroup: FormGroup;
-  results: PaginatedData<Entity>;
+  results: PaginatedData<Searchable>;
   viewType: string;
   loading: boolean;
 
@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit {
     this.previousPageSize = 10;
   }
 
-  get currentResults(): Entity[] {
+  get currentResults(): Searchable[] {
     return this.results[this.pageEvent.pageIndex];
   }
 
@@ -89,7 +89,7 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  click(result: Entity) {
+  click(result: Searchable) {
     if (result instanceof MouseEvent) {
       return;
     }

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import { EntityUtil } from '../../../types/entity-util';
+import {EntityUtil} from '../../../types/entity-util';
 
 @Component({
   selector: 'app-grid-view',
@@ -7,9 +7,9 @@ import { EntityUtil } from '../../../types/entity-util';
   styleUrls: ['./grid-view.component.scss']
 })
 export class GridViewComponent implements OnInit {
-  @Input() currentResults: Entity[];
+  @Input() currentResults: Searchable[];
   @Input() descriptor = true;
-  @Output() click = new EventEmitter<Entity>();
+  @Output() click = new EventEmitter<Searchable>();
   chunk: number;
 
   constructor() { }
@@ -23,16 +23,16 @@ export class GridViewComponent implements OnInit {
     this.chunk = Math.floor(event.target.innerWidth / 150);
   }
 
-  onClick(result: Entity) {
+  onClick(result: Searchable) {
     this.click.emit(result);
   }
 
-  img(result: Entity) {
+  img(result: Searchable) {
     const image = EntityUtil.getImage(result, 'best');
     return image ? `url("${image}")` : 'url("assets/placeholder.jpg")';
   }
 
-  getDescriptor(result: Entity) {
+  getDescriptor(result: Searchable) {
     return this.descriptor ? EntityUtil.getDescriptor(result) : undefined;
   }
 }

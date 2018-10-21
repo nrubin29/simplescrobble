@@ -1,4 +1,5 @@
 interface TrackMatch {
+  type: 'song';
   name: string;
   artist: string | any;
   url: string;
@@ -12,7 +13,6 @@ interface TrackMatch {
 }
 
 interface Track extends TrackMatch {
-  type: 'song';
   id?: string;
   duration: string;
   playcount: string;

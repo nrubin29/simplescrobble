@@ -1,31 +1,30 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { EntityUtil } from '../../../types/entity-util';
-
+import {EntityUtil} from '../../../types/entity-util';
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.scss']
 })
 export class ListViewComponent implements OnInit {
-  @Input() currentResults: Entity[];
+  @Input() currentResults: Searchable[];
   @Input() image = true;
   @Input() descriptor = true;
-  @Output() click = new EventEmitter<Entity>();
+  @Output() click = new EventEmitter<Searchable>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  onClick(result: Entity) {
+  onClick(result: Searchable) {
     this.click.emit(result);
   }
 
-  img(result: Entity) {
+  img(result: Searchable) {
     return EntityUtil.getImage(result, 'worst') || 'assets/placeholder.jpg';
   }
 
-  getDescriptor(result: Entity) {
+  getDescriptor(result: Searchable) {
     return this.descriptor ? EntityUtil.getDescriptor(result) : undefined;
   }
 }

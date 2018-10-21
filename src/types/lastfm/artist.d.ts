@@ -1,4 +1,5 @@
 interface ArtistMatch {
+  type: 'artist';
   name: string;
   url: string;
   streamable: '0' | '1';
@@ -7,7 +8,6 @@ interface ArtistMatch {
 }
 
 interface Artist extends ArtistMatch {
-  type: 'artist';
   id?: string;
   albums: AlbumMatch[];
   stats: {

@@ -41,7 +41,7 @@ export class LastfmService {
     }, ['album', 'artist', 'track']), null).toPromise();
   }
 
-  search(type: 'song' | 'artist' | 'album', q: string, limit: number, page: number): Promise<SearchResult<Entity>> {
+  search(type: 'song' | 'artist' | 'album', q: string, limit: number, page: number): Promise<SearchResult<Searchable>> {
     if (type === 'song') {
       return this.searchTracks(q, limit, page);
     }
@@ -69,28 +69,28 @@ export class LastfmService {
     };
   }
 
-  async searchAlbums(q: string, limit: number, page: number): Promise<SearchResult<any>> {
+  async searchAlbums(q: string, limit: number, page: number): Promise<SearchResult<AlbumMatch>> {
     const albumMatches = await this.httpClient.get<AlbumSearchResponse>(this.buildURL('album.search', {album: q, limit: limit.toString(), page: page.toString()}, ['album'])).toPromise();
 
     return {
       count: +albumMatches.results['opensearch:totalResults'],
-      results: albumMatches.results.albummatches.album.map(albumMatch => ({...albumMatch, type: 'album'}))
+      results: albumMatches.results.albummatches.album.map<AlbumMatch>(albumMatch => ({...albumMatch, type: 'album'}))
     };
   }
 
-  async searchArtists(q: string, limit: number, page: number): Promise<SearchResult<any>> {
+  async searchArtists(q: string, limit: number, page: number): Promise<SearchResult<ArtistMatch>> {
     const artistMatches = await this.httpClient.get<ArtistSearchResponse>(this.buildURL('artist.search', {artist: q, limit: limit.toString(), page: page.toString()}, ['artist'])).toPromise();
 
     return {
       count: +artistMatches.results['opensearch:totalResults'],
-      results: artistMatches.results.artistmatches.artist.map(artistMatch => ({...artistMatch, type: 'artist'}))
+      results: artistMatches.results.artistmatches.artist.map<ArtistMatch>(artistMatch => ({...artistMatch, type: 'artist'}))
     };
   }
 
   async getArtist(name: string): Promise<Artist> {
     const artistInfo = await this.httpClient.get<ArtistInfoResponse>(this.buildURL('artist.getInfo', {artist: name}, ['artist'])).toPromise();
     const topAlbumInfo = await this.httpClient.get<TopAlbumsResponse>(this.buildURL('artist.getTopAlbums', {artist: name},['artist'])).toPromise();
-    return {...artistInfo.artist, albums: topAlbumInfo.topalbums.album.map(album => ({...album, type: 'album'})), type: 'artist'};
+    return {...artistInfo.artist, albums: topAlbumInfo.topalbums.album.map<AlbumMatch>(album => ({...album, type: 'album'})), type: 'artist'};
   }
 
   async getAlbum(artist: string, name: string): Promise<Album> {

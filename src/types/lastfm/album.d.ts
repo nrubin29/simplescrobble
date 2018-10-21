@@ -1,4 +1,5 @@
 interface AlbumMatch {
+  type: 'album';
   name: string;
   artist: string | any;
   url: string;
@@ -7,7 +8,6 @@ interface AlbumMatch {
 }
 
 interface Album extends AlbumMatch {
-  type: 'album';
   id?: string;
   artist: string;
   playcount: string;
