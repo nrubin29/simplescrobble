@@ -1,5 +1,5 @@
 <form #form="ngForm" [formGroup]="formGroup" (submit)="submit()">
-  <mat-button-toggle-group formControlName="service">
+  <mat-button-toggle-group formControlName="service" (change)="serviceChange($event)">
     <mat-button-toggle matTooltip="Last.fm" value="lastfm">
       <fa-icon [icon]="faLastfm" size="lg"></fa-icon>
     </mat-button-toggle>

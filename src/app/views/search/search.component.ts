@@ -14,7 +14,7 @@ import {faLastfm, faSpotify} from '@fortawesome/free-brands-svg-icons';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  @ViewChild(MatButtonToggleGroup) service: MatButtonToggleGroup;
+  @ViewChild(MatButtonToggleGroup, {static: true}) service: MatButtonToggleGroup;
   formGroup: FormGroup;
 
   results: PaginatedData<Searchable>;
@@ -25,7 +25,7 @@ export class SearchComponent implements OnInit {
   previousPageSize: number;
 
   @ViewChildren('navList', { read: ElementRef }) navList: QueryList<ElementRef>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   faLastfm = faLastfm;
   faSpotify = faSpotify;
@@ -46,18 +46,18 @@ export class SearchComponent implements OnInit {
       length: 0
     };
     this.previousPageSize = 10;
+  }
 
-    this.service.change.subscribe((next: MatButtonToggleChange) => {
-      if (next.value === 'spotify') {
-        if (!this.spotifyService.isAuthenticated()) {
-          this.service.value = 'lastfm';
-          this.spotifyService.authenticate();
-          return;
-        }
+  serviceChange(event: MatButtonToggleChange) {
+    if (event.value === 'spotify') {
+      if (!this.spotifyService.isAuthenticated()) {
+        this.service.value = 'lastfm';
+        this.spotifyService.authenticate();
+        return;
       }
+    }
 
-      this.backendService.service = next.value;
-    });
+    this.backendService.service = event.value;
   }
 
   get currentResults(): Searchable[] {
