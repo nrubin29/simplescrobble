@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { environment } from '../../../environments/environment';
 import SpotifyTransform from '../../../types/transform/spotify.transform';
+import env from '../../../../env';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class SpotifyService implements MusicService {
 
   authenticate() {
     const args = {
-      'client_id': environment.spotifyClientID,
+      'client_id': env.spotifyClientID,
       'response_type': 'token',
       'redirect_uri': encodeURIComponent(environment.baseUrl) + '/spotify',
       // TODO: state

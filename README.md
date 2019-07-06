@@ -1,27 +1,23 @@
-# Simplescrobble
+# simplescrobble
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.2.
+simplescrobble is a free Last.fm scrobbler with support for advanced features. Check it out at [simplescrobble.com](http://simplescrobble.com) or run your own instance!
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* Track, artist, and album search
+* Search using the Last.fm or Spotify database
+* Custom datetime for scrobbles
+* Scrobble entire albums
+* 100% free, ad-free, and open-source, forever.
 
-## Code scaffolding
+## Running simplescrobble
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Running your own instance of simplescrobble is easy! Here's how to do it:
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+1. [Get a Last.fm API key](https://www.last.fm/api/account/create). It's free.
+2. If you'd like to use the Spotify features, [get a Spotify API key](). It's free. If you don't want to use the Spotify features, you should be fine to not provide a key.
+3. Clone this repository.
+4. Run `yarn install` or `npm install` to install the dependencies.
+5. Rename the file `env-sample.ts` to `env.ts` and fill in your API key, API secret, and Spotify client ID.
+6. Run `yarn run start` or `npm run start` to run simplescrobble locally.
+7. Run `yarn run prod` or `npm run prod` to build a production bundle for simplescrobble. Note that if you are going to deploy your own version of simplescrobble, credit would be greatly appreciated.
