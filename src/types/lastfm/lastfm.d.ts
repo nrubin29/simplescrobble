@@ -1,7 +1,7 @@
-type Images = {
+interface LImage {
   '#text': string;
   size: 'small' | 'medium' | 'large' | 'extralarge';
-}[];
+}
 
 interface CorrectedObject {
   corrected: '0' | '1';

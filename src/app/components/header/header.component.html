@@ -7,7 +7,7 @@
     <span class="spacer"></span>
     <ng-container *ngIf="user">
       <button mat-button class="user-button" [matMenuTriggerFor]="appMenu">
-        <img [src]="user.image[0]['#text']" />
+        <img [src]="user.images[0].url" />
         <span class="welcome">Welcome, {{user.name}}</span>
       </button>
     </ng-container>

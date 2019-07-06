@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { LastfmService } from '../../services/lastfm/lastfm.service';
+import {BackendService} from '../../services/backend/backend.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtistResolve implements Resolve<Artist> {
 
-  constructor(private lastfmService: LastfmService) { }
+  constructor(private backendService: BackendService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Artist> {
-    return this.lastfmService.getArtist(route.params.name);
+    return this.backendService.getArtist(route.params.name);
   }
 }

@@ -1,20 +1,20 @@
 export class EntityUtil {
-  static getImage(entity: Entity | Searchable, quality: 'worst' | 'best') {
-    let image: Images;
+  static getImage(entity: Entity | Searchable, quality: 'worst' | 'best'): string {
+    let images: Image[];
 
-    if (entity.type === 'song') {
-      image = entity.album ? entity.album.image : undefined;
+    if (entity.type === 'track') {
+      images = entity.album ? entity.album.images : undefined;
     }
 
     else {
-      image = entity.image;
+      images = entity.images;
     }
 
-    return image ? image[quality === 'best' ? image.length - 1 : 0]['#text'] : '';
+    return images && images.length > 0 ? images[quality === 'best' ? images.length - 1 : 0].url : '';
   }
 
-  static getDescriptor(searchable: Searchable) {
-    if (searchable.type === 'song') {
+  static getDescriptor(searchable: Searchable): string {
+    if (searchable.type === 'track') {
       return searchable.artist.name;
     }
 

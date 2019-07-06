@@ -9,11 +9,13 @@ import { ArtistComponent } from './views/artist/artist.component';
 import { ArtistResolve } from './resolves/artist/artist.resolve';
 import { AlbumResolve } from './resolves/album/album.resolve';
 import { AlbumComponent } from './views/album/album.component';
+import {SpotifyComponent} from './views/spotify/spotify.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent, canActivate: [RequireNoTokenGuard]},
   {path: 'callback', component: CallbackComponent, canActivate: [RequireNoTokenGuard]},
+  {path: 'spotify', component: SpotifyComponent, canActivate: [RequireTokenGuard]},
   {path: 'search', component: SearchComponent, canActivate: [RequireTokenGuard]},
   {path: 'artist/:name', component: ArtistComponent, resolve: {artist: ArtistResolve}},
   {path: 'album/:artist/:name', component: AlbumComponent, resolve: {album: AlbumResolve}},

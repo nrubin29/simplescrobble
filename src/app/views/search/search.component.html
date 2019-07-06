@@ -1,6 +1,14 @@
 <form #form="ngForm" [formGroup]="formGroup" (submit)="submit()">
+  <mat-button-toggle-group formControlName="service">
+    <mat-button-toggle matTooltip="Last.fm" value="lastfm">
+      <fa-icon [icon]="faLastfm" size="lg"></fa-icon>
+    </mat-button-toggle>
+    <mat-button-toggle matTooltip="Spotify" value="spotify">
+      <fa-icon [icon]="faSpotify" size="lg"></fa-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
   <mat-button-toggle-group formControlName="type">
-    <mat-button-toggle matTooltip="Song" value="song">
+    <mat-button-toggle matTooltip="Track" value="track">
       <mat-icon>music_note</mat-icon>
     </mat-button-toggle>
     <mat-button-toggle matTooltip="Artist" value="artist">

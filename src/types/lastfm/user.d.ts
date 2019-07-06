@@ -1,10 +1,10 @@
-interface User {
+interface LUser {
   type: 'user';
   id?: string;
   name: string;
   realname: string;
   url: string;
-  image: Images;
+  image: LImage[];
   country: string;
   age: string;
   gender: 'm' | 'f';
@@ -18,13 +18,13 @@ interface User {
   };
 }
 
-interface AuthenticationResponse {
+interface LAuthenticationResponse {
   session: {
     name: string;
     key: string;
   };
 }
 
-interface UserResponse {
-  user: User;
+interface LUserResponse {
+  user: LUser;
 }

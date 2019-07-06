@@ -22,11 +22,11 @@ export class ArtistComponent implements OnInit {
     return EntityUtil.getImage(this.artist, 'best');
   }
 
-  onClick(album: AlbumMatch) {
+  onClick(album: Album) {
     if (album instanceof MouseEvent) {
       return;
     }
 
-    this.router.navigate(['/album', album.artist.name, album.name]);
+    this.router.navigate(['/album', album.artist, album.name]);
   }
 }

@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { LastfmService } from '../../services/lastfm/lastfm.service';
-import {MatDialog, MatPaginator, PageEvent} from '@angular/material';
+import {MatButtonToggleChange, MatButtonToggleGroup, MatDialog, MatPaginator, PageEvent} from '@angular/material';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import {ScrobbleComponent} from '../../components/scrobble/scrobble.component';
+import {SpotifyService} from '../../services/spotify/spotify.service';
+import {BackendService} from '../../services/backend/backend.service';
+import {faLastfm, faSpotify} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-search',
@@ -12,7 +14,9 @@ import {ScrobbleComponent} from '../../components/scrobble/scrobble.component';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+  @ViewChild(MatButtonToggleGroup) service: MatButtonToggleGroup;
   formGroup: FormGroup;
+
   results: PaginatedData<Searchable>;
   viewType: string;
   loading: boolean;
@@ -23,11 +27,15 @@ export class SearchComponent implements OnInit {
   @ViewChildren('navList', { read: ElementRef }) navList: QueryList<ElementRef>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private lastfmService: LastfmService, private matDialog: MatDialog, private router: Router) { }
+  faLastfm = faLastfm;
+  faSpotify = faSpotify;
+
+  constructor(private backendService: BackendService, private spotifyService: SpotifyService, private matDialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
     this.formGroup = new FormGroup({
-      type: new FormControl('song'),
+      service: new FormControl(this.backendService.service || 'lastfm'),
+      type: new FormControl('track'),
       query: new FormControl(environment.testQuery)
     });
     this.results = {};
@@ -38,6 +46,18 @@ export class SearchComponent implements OnInit {
       length: 0
     };
     this.previousPageSize = 10;
+
+    this.service.change.subscribe((next: MatButtonToggleChange) => {
+      if (next.value === 'spotify') {
+        if (!this.spotifyService.isAuthenticated()) {
+          this.service.value = 'lastfm';
+          this.spotifyService.authenticate();
+          return;
+        }
+      }
+
+      this.backendService.service = next.value;
+    });
   }
 
   get currentResults(): Searchable[] {
@@ -50,7 +70,7 @@ export class SearchComponent implements OnInit {
 
   submit() {
     this.results = {};
-    this.viewType = this.formGroup.getRawValue().type === 'song' ? 'list' : 'grid';
+    this.viewType = this.formGroup.getRawValue().type === 'track' ? 'list' : 'grid';
     this.loadData();
   }
 
@@ -59,7 +79,7 @@ export class SearchComponent implements OnInit {
     const page = {...this.pageEvent};
     this.loading = true;
 
-    const searchResults = await this.lastfmService.search(this.formGroup.getRawValue().type, this.formGroup.getRawValue().query, page.pageSize, page.pageIndex + 1);
+    const searchResults = await this.backendService.search(this.formGroup.getRawValue().type, this.formGroup.getRawValue().query, page.pageSize, page.pageIndex + 1);
     this.results[page.pageIndex] = searchResults.results;
 
     this.paginator.length = searchResults.count;
@@ -94,7 +114,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    if (result.type === 'song') {
+    if (result.type === 'track') {
       this.matDialog.open(ScrobbleComponent, {data: result});
     }
 

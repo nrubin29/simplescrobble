@@ -18,7 +18,7 @@ export class ScrobbleComponent implements OnInit {
     this.formGroup = new FormGroup({
       song: new FormControl(this.data.name || ''),
       artist: new FormControl(this.data.artist ? this.data.artist.name || '' : ''),
-      album: new FormControl(this.data.album ? this.data.album.title || '' : ''),
+      album: new FormControl(this.data.album ? this.data.album.name || '' : ''),
       custom: new FormControl(false),
       timestamp: new FormControl()
     });

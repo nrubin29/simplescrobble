@@ -1,4 +1,4 @@
-interface TrackMatch {
+interface LTrackMatch {
   type: 'song';
   name: string;
   artist: string | any;
@@ -9,10 +9,10 @@ interface TrackMatch {
   };
   listeners: string;
   mbid: string;
-  image?: Images;
+  image?: LImage[];
 }
 
-interface Track extends TrackMatch {
+interface LTrack extends LTrackMatch {
   id?: string;
   duration: string;
   playcount: string;
@@ -26,7 +26,7 @@ interface Track extends TrackMatch {
     title: string;
     mbid: string;
     url: string;
-    image: Images;
+    image: LImage[];
     '@attr': {
       'position': string;
     };
@@ -44,7 +44,7 @@ interface Track extends TrackMatch {
   };
 }
 
-interface TrackSearchResponse {
+interface LTrackSearchResponse {
   results: {
     opensearch: {
       '#text': string;
@@ -55,11 +55,11 @@ interface TrackSearchResponse {
     'opensearch:startIndex': string;
     'opensearch:totalResults': string;
     trackmatches: {
-      track: TrackMatch[];
+      track: LTrackMatch[];
     };
   };
 }
 
-interface TrackInfoResponse {
-  track: Track;
+interface LTrackInfoResponse {
+  track: LTrack;
 }

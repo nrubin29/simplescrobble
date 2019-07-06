@@ -5,4 +5,4 @@
     <h4><a [routerLink]="['/artist', album.artist]">{{album.artist}}</a></h4>
   </div>
 </mat-card>
-<app-list-view [currentResults]="album.tracks.track" [descriptor]="false" [image]="false" (click)="onClick($event)"></app-list-view>
+<app-list-view [currentResults]="album.tracks" [descriptor]="false" [image]="false" (click)="onClick($event)"></app-list-view>

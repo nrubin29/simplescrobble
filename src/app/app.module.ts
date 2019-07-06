@@ -25,6 +25,8 @@ import { ArtistComponent } from './views/artist/artist.component';
 import { AlbumComponent } from './views/album/album.component';
 import { HeaderComponent } from './components/header/header.component';
 import {ChunkPipe} from './pipes/chunk.pipe';
+import { SpotifyComponent } from './views/spotify/spotify.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import {ChunkPipe} from './pipes/chunk.pipe';
     ArtistComponent,
     AlbumComponent,
     HeaderComponent,
-    ChunkPipe
+    ChunkPipe,
+    SpotifyComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ import {ChunkPipe} from './pipes/chunk.pipe';
     MatIconModule,
     MatButtonToggleModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    FontAwesomeModule
   ],
   entryComponents: [
     ScrobbleComponent

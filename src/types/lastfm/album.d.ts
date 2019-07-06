@@ -1,18 +1,18 @@
-interface AlbumMatch {
+interface LAlbumMatch {
   type: 'album';
   name: string;
-  artist: string | any;
+  artist: string | LArtistMatch;
   url: string;
   mbid: string;
-  image?: Images;
+  image?: LImage[];
 }
 
-interface Album extends AlbumMatch {
+interface LAlbum extends LAlbumMatch {
   id?: string;
   artist: string;
   playcount: string;
   tracks: {
-    track: TrackMatch[]
+    track: LTrackMatch[]
   };
   tags: {
     tag: {
@@ -27,7 +27,7 @@ interface Album extends AlbumMatch {
   };
 }
 
-interface AlbumSearchResponse {
+interface LAlbumSearchResponse {
   results: {
     '@attr': {
       for: string
@@ -42,11 +42,11 @@ interface AlbumSearchResponse {
     'opensearch:startIndex': string;
     'opensearch:totalResults': string;
     albummatches: {
-      album: AlbumMatch[];
+      album: LAlbumMatch[];
     };
   };
 }
 
-interface AlbumInfoResponse {
-  album: Album;
+interface LAlbumInfoResponse {
+  album: LAlbum;
 }

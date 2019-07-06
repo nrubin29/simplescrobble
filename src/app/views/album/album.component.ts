@@ -24,11 +24,11 @@ export class AlbumComponent implements OnInit {
     return EntityUtil.getImage(this.album, 'best');
   }
 
-  onClick(track: TrackMatch) {
+  onClick(track: Track) {
     if (track instanceof MouseEvent) {
       return;
     }
 
-    this.matDialog.open(ScrobbleComponent, {data: {...track, album: {title: this.album.name}}});
+    this.matDialog.open(ScrobbleComponent, {data: {...track, album: {name: this.album.name}}});
   }
 }

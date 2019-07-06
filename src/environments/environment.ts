@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:4200',
-  testQuery: 'A Lack of Color'
+  testQuery: 'A Lack of Color',
+  spotifyClientID: '38b3b3046a6847f899bda4a4ce2f8666'
 };
 
 /*

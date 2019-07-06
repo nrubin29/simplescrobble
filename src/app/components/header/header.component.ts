@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.lastfmService.onAuth.subscribe(() => {
-      this.lastfmService.getUserInfo().then(response => this.user = response.user).catch(() => { this.user = undefined; });
+      this.lastfmService.getUserInfo().then(response => this.user = response).catch(() => { this.user = undefined; });
     });
     this.lastfmService.onAuth.next();
   }
