@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EntityUtil } from '../../../types/entity-util';
 import {MatDialog} from '@angular/material';
 import {ScrobbleComponent} from '../../components/scrobble/scrobble.component';
+import {MultiScrobbleComponent} from '../../components/multi-scrobble/multi-scrobble.component';
 
 @Component({
   selector: 'app-album',
@@ -30,5 +31,9 @@ export class AlbumComponent implements OnInit {
     }
 
     this.matDialog.open(ScrobbleComponent, {data: {...track, album: {name: this.album.name}}});
+  }
+
+  scrobble() {
+    this.matDialog.open(MultiScrobbleComponent, {data: this.album});
   }
 }

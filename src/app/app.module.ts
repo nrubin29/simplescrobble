@@ -27,11 +27,13 @@ import { HeaderComponent } from './components/header/header.component';
 import {ChunkPipe} from './pipes/chunk.pipe';
 import { SpotifyComponent } from './views/spotify/spotify.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {MultiScrobbleComponent} from './components/multi-scrobble/multi-scrobble.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ScrobbleComponent,
+    MultiScrobbleComponent,
     LoginComponent,
     CallbackComponent,
     SearchComponent,
@@ -70,7 +72,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     FontAwesomeModule
   ],
   entryComponents: [
-    ScrobbleComponent
+    ScrobbleComponent,
+    MultiScrobbleComponent
   ],
   providers: [
     ChunkPipe

@@ -41,7 +41,8 @@ export default class LastfmTransform {
                 name: track.album ? track.album.title : '',
                 artist: track.artist ? track.artist.name : '',
                 images: track.album ? track.album.image.map(image => ({'url': image['#text']})) : []
-            }
+            },
+            duration: Number(track.duration)
         };
     }
 

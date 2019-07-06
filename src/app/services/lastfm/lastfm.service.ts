@@ -32,13 +32,20 @@ export class LastfmService implements MusicService {
     return this.httpClient.get<LAuthenticationResponse>(this.buildURL('auth.getSession', {token: token})).toPromise();
   }
 
-  scrobble(input: SimpleTrack, timestamp: number): Promise<ScrobbleResponse> {
+  scrobble(input: SimpleTrack[], timestamp: number[]): Promise<ScrobbleResponse> {
+    const data = {};
+
+    for (let i = 0; i < input.length; i++) {
+      data[`album[${i + 1}]`] = input[i].album;
+      data[`artist[${i + 1}]`] = input[i].artist;
+      data[`track[${i + 1}]`] = input[i].name;
+      data[`timestamp[${i + 1}]`] = timestamp[i];
+    }
+
     return this.httpClient.post<ScrobbleResponse>(this.buildURL('track.scrobble', {
-      album: input.album,
-      artist: input.artist,
+      ...data,
       sk: localStorage.getItem('key'),
       timestamp: timestamp.toString(),
-      track: input.song
     }, ['album', 'artist', 'track']), null).toPromise();
   }
 
@@ -99,5 +106,5 @@ export class LastfmService implements MusicService {
 export interface SimpleTrack {
   album: string;
   artist: string;
-  song: string;
+  name: string;
 }

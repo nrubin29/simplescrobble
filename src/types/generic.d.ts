@@ -19,6 +19,8 @@ interface Track {
   name: string;
   artist: Artist;
   album: Album;
+  /** Duration in seconds. */
+  duration: number;
 }
 
 interface Album {

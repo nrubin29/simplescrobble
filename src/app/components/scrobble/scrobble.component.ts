@@ -16,7 +16,7 @@ export class ScrobbleComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = new FormGroup({
-      song: new FormControl(this.data.name || ''),
+      name: new FormControl(this.data.name || ''),
       artist: new FormControl(this.data.artist ? this.data.artist.name || '' : ''),
       album: new FormControl(this.data.album ? this.data.album.name || '' : ''),
       custom: new FormControl(false),
@@ -25,7 +25,7 @@ export class ScrobbleComponent implements OnInit {
   }
 
   submit(form: NgForm) {
-    this.lastfmService.scrobble(form.value, form.value.custom ? moment(form.value.timestamp).unix() : moment().unix()).then(data => {
+    this.lastfmService.scrobble([form.value], [form.value.custom ? moment(form.value.timestamp).unix() : moment().unix()]).then(data => {
       this.matDialogRef.close();
       this.snackBar.open(data.scrobbles['@attr'].accepted > 0 ? 'Success!' : 'Failed.', undefined, {
         duration: 3000,

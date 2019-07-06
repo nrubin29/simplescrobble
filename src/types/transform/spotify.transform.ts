@@ -36,7 +36,8 @@ export default class SpotifyTransform {
                 name: track.album.name,
                 artist: track.artists[0].name,
                 images: track.album.images
-            }
+            },
+            duration: track.duration_ms / 1000
         };
     }
 
