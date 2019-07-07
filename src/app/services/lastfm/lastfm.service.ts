@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as md5 from 'md5';
 import env from '../../../../env';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import LastfmTransform from '../../../types/transform/lastfm.transform';
 
 @Injectable({
@@ -28,8 +28,8 @@ export class LastfmService implements MusicService {
     return this.base + '?format=json&' + Object.keys(allUrlData).sort().map(key => key + '=' + (encode.indexOf(key) !== -1 ? this.encode(allUrlData[key]) : allUrlData[key])).join('&');
   }
 
-  authenticate(token: string): Promise<LAuthenticationResponse> {
-    return this.httpClient.get<LAuthenticationResponse>(this.buildURL('auth.getSession', {token: token})).toPromise();
+  authenticate(token: string): Observable<LAuthenticationResponse> {
+    return this.httpClient.get<LAuthenticationResponse>(this.buildURL('auth.getSession', {token: token}));
   }
 
   scrobble(input: SimpleTrack[], timestamp: number[]): Promise<ScrobbleResponse> {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LastfmService } from '../../services/lastfm/lastfm.service';
+import {State} from '../../state';
+import {Store} from '@ngrx/store';
+import {authenticateAction} from '../../services/lastfm/lastfm.actions';
 
 @Component({
   selector: 'app-callback',
@@ -8,16 +9,9 @@ import { LastfmService } from '../../services/lastfm/lastfm.service';
   styleUrls: ['./callback.component.scss']
 })
 export class CallbackComponent implements OnInit {
-  constructor(private lastfmService: LastfmService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private store: Store<State>) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.lastfmService.authenticate(params['token']).then(data => {
-        localStorage.setItem('key', data.session.key);
-        localStorage.setItem('name', data.session.name);
-        this.lastfmService.onAuth.next();
-        this.router.navigate(['/search']);
-      });
-    });
+    this.store.dispatch(authenticateAction());
   }
 }

@@ -8,7 +8,8 @@ simplescrobble is a free Last.fm scrobbler with support for advanced features. C
 * Search using the Last.fm or Spotify database
 * Custom datetime for scrobbles
 * Scrobble entire albums
-* 100% free, ad-free, and open-source, forever.
+* Optimized for mobile
+* 100% free, ad-free, and open-source, forever
 
 ## Running simplescrobble
 

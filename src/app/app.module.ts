@@ -28,6 +28,11 @@ import {ChunkPipe} from './pipes/chunk.pipe';
 import { SpotifyComponent } from './views/spotify/spotify.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MultiScrobbleComponent} from './components/multi-scrobble/multi-scrobble.component';
+import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {LastfmEffects} from './services/lastfm/lastfm.effects';
+import {State} from './state';
 
 @NgModule({
   declarations: [
@@ -69,7 +74,10 @@ import {MultiScrobbleComponent} from './components/multi-scrobble/multi-scrobble
     MatButtonToggleModule,
     MatTooltipModule,
     MatDialogModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    StoreModule.forRoot<State>({router: routerReducer}),
+    EffectsModule.forRoot([LastfmEffects]),
+    StoreRouterConnectingModule.forRoot(),
   ],
   entryComponents: [
     ScrobbleComponent,
