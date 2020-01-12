@@ -27,6 +27,6 @@ export class ArtistComponent implements OnInit {
       return;
     }
 
-    this.router.navigate(['/album', album.artist, album.name]);
+    this.router.navigate(['/album', album.artist, album.id]);
   }
 }

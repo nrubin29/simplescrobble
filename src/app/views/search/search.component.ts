@@ -119,11 +119,11 @@ export class SearchComponent implements OnInit {
     }
 
     else if (result.type === 'artist') {
-      this.router.navigate(['artist', result.name]);
+      this.router.navigate(['artist', result.id]);
     }
 
     else if (result.type === 'album') {
-      this.router.navigate(['album', result.artist, result.name]);
+      this.router.navigate(['album', result.artist, result.id]);
     }
   }
 }

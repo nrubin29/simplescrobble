@@ -82,14 +82,14 @@ export class LastfmService implements MusicService {
     };
   }
 
-  async getArtist(name: string): Promise<Artist> {
-    const artistInfo = await this.httpClient.get<LArtistInfoResponse>(this.buildURL('artist.getInfo', {artist: name}, ['artist'])).toPromise();
-    const topAlbumInfo = await this.httpClient.get<TopAlbumsResponse>(this.buildURL('artist.getTopAlbums', {artist: name}, ['artist'])).toPromise();
+  async getArtist(id: string): Promise<Artist> {
+    const artistInfo = await this.httpClient.get<LArtistInfoResponse>(this.buildURL('artist.getInfo', {artist: id}, ['artist'])).toPromise();
+    const topAlbumInfo = await this.httpClient.get<TopAlbumsResponse>(this.buildURL('artist.getTopAlbums', {artist: id}, ['artist'])).toPromise();
     return LastfmTransform.transformArtist(artistInfo.artist, topAlbumInfo.topalbums.album);
   }
 
-  async getAlbum(artist: string, name: string): Promise<Album> {
-    const albumInfo = await this.httpClient.get<LAlbumInfoResponse>(this.buildURL('album.getInfo', {artist, album: name})).toPromise();
+  async getAlbum(artistId: string, id: string): Promise<Album> {
+    const albumInfo = await this.httpClient.get<LAlbumInfoResponse>(this.buildURL('album.getInfo', {artist: artistId, album: id})).toPromise();
     return LastfmTransform.transformAlbum(albumInfo.album);
   }
 

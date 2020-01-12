@@ -2,7 +2,7 @@
   <img [src]="img" width="100px" />
   <div>
     <h2>{{album.name}}</h2>
-    <h4><a [routerLink]="['/artist', album.artist]">{{album.artist}}</a></h4>
+    <h4><a [routerLink]="['/artist', album.artistId]">{{album.artist}}</a></h4>
     <button mat-button (click)="scrobble()"><mat-icon>playlist_add</mat-icon> Scrobble Album</button>
   </div>
 </mat-card>

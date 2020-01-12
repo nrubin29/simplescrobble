@@ -17,8 +17,8 @@ const routes: Routes = [
   {path: 'callback', component: CallbackComponent, canActivate: [RequireNoTokenGuard]},
   {path: 'spotify', component: SpotifyComponent, canActivate: [RequireTokenGuard]},
   {path: 'search', component: SearchComponent, canActivate: [RequireTokenGuard]},
-  {path: 'artist/:name', component: ArtistComponent, resolve: {artist: ArtistResolve}},
-  {path: 'album/:artist/:name', component: AlbumComponent, resolve: {album: AlbumResolve}},
+  {path: 'artist/:id', component: ArtistComponent, resolve: {artist: ArtistResolve}},
+  {path: 'album/:artistId/:id', component: AlbumComponent, resolve: {album: AlbumResolve}},
   {path: '**', redirectTo: '/login'}
 ];
 

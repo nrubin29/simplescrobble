@@ -12,11 +12,13 @@ interface SearchResult<T extends Searchable> {
 
 interface Image {
   url: string;
+  width?: number;
 }
 
 interface Track {
   type: 'track';
   name: string;
+  id: string;
   artist: Artist;
   album: Album;
   /** Duration in seconds. */
@@ -26,7 +28,9 @@ interface Track {
 interface Album {
   type: 'album';
   name: string;
+  id: string;
   artist: string;
+  artistId: string;
   images: Image[];
   tracks?: Track[]; // TODO: Maybe this should be a separate interface?
 }
@@ -34,6 +38,7 @@ interface Album {
 interface Artist {
   type: 'artist';
   name: string;
+  id: string;
   images: Image[];
   albums?: Album[]; // TODO: Maybe this should be a separate interface?
 }

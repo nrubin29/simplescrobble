@@ -10,6 +10,6 @@ export class AlbumResolve implements Resolve<Album> {
   constructor(private backendService: BackendService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Album> {
-    return this.backendService.getAlbum(route.params.artist, route.params.name);
+    return this.backendService.getAlbum(route.params.artistId, route.params.id);
   }
 }

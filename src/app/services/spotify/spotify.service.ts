@@ -48,12 +48,12 @@ export class SpotifyService implements MusicService {
     localStorage.setItem('spotify_expires', new Date().setSeconds(new Date().getSeconds() + expiresIn).toString());
   }
 
-  async getAlbum(artist: string, name: string): Promise<Album> {
-    return SpotifyTransform.transformAlbum(await this.spotify.getAlbum(name)); // TODO: This should be the album's ID.
+  async getAlbum(artistId: string, id: string): Promise<Album> {
+    return SpotifyTransform.transformAlbum(await this.spotify.getAlbum(id), await this.spotify.getAlbumTracks(id, {limit: 50})); // TODO: Handle paging properly
   }
 
-  async getArtist(name: string): Promise<Artist> {
-    return SpotifyTransform.transformArtist(await this.spotify.getArtist(name)); // TODO: This should be the artist's ID.
+  async getArtist(id: string): Promise<Artist> {
+    return SpotifyTransform.transformArtist(await this.spotify.getArtist(id), await this.spotify.getArtistAlbums(id, {limit: 50})); // TODO: Handle paging properly
   }
 
   async getUserInfo(): Promise<User> {

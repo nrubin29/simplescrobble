@@ -22,12 +22,12 @@ export class BackendService implements MusicService {
     }
   }
 
-  getAlbum(artist: string, name: string): Promise<Album> {
-    return this.activeService.getAlbum(artist, name);
+  getAlbum(artistId: string, albumId: string): Promise<Album> {
+    return this.activeService.getAlbum(artistId, albumId);
   }
 
-  getArtist(name: string): Promise<Artist> {
-    return this.activeService.getArtist(name);
+  getArtist(id: string): Promise<Artist> {
+    return this.activeService.getArtist(id);
   }
 
   getUserInfo(): Promise<User> {

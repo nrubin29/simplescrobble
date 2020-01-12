@@ -3,12 +3,21 @@ import ArtistObjectFull = SpotifyApi.ArtistObjectFull;
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 
 export default class LastfmTransform {
+    static LImageSizeToWidth = {
+      'small': 0,
+      'medium': 1,
+      'large': 2,
+      'extralarge': 3
+    };
+
     static transformAlbum(album: LAlbumMatch): Album {
         const ret: Album = {
             type: 'album',
             name: album.name,
+            id: album.name,
             artist: typeof album.artist === 'string' ? album.artist : album.artist.name,
-            images: album.image ? album.image.map(image => ({'url': image['#text']})) : []
+            artistId: typeof album.artist === 'string' ? album.artist : album.artist.name,
+            images: album.image ? album.image.map(image => ({url: image['#text'], width: LastfmTransform.LImageSizeToWidth[image.size]})) : []
         };
 
         if ((<any>album).tracks !== undefined) {
@@ -22,7 +31,8 @@ export default class LastfmTransform {
         return {
             type: 'artist',
             name: artist.name,
-            images: artist.image ? artist.image.map(image => ({'url': image['#text']})) : [],
+            id: artist.name,
+            images: artist.image ? artist.image.map(image => ({url: image['#text'], width: LastfmTransform.LImageSizeToWidth[image.size]})) : [],
             albums: albums ? albums.map(album => LastfmTransform.transformAlbum(album)) : undefined
         };
     }
@@ -31,16 +41,20 @@ export default class LastfmTransform {
         return {
             type: 'track',
             name: track.name,
+            id: track.name,
             artist: {
                 type: 'artist',
                 name: track.artist ? track.artist.name : '',
+                id: track.artist ? track.artist.name : '',
                 images: undefined
             },
             album: {
                 type: 'album',
                 name: track.album ? track.album.title : '',
+                id: track.album ? track.album.title : '',
                 artist: track.artist ? track.artist.name : '',
-                images: track.album ? track.album.image.map(image => ({'url': image['#text']})) : []
+                artistId: track.artist ? track.artist.name : '',
+                images: track.album ? track.album.image.map(image => ({url: image['#text'], width: LastfmTransform.LImageSizeToWidth[image.size]})) : []
             },
             duration: Number(track.duration)
         };
@@ -50,7 +64,7 @@ export default class LastfmTransform {
         return {
             type: 'user',
             name: user.name,
-            images: user.image.map(image => ({'url': image['#text']}))
+            images: user.image.map(image => ({url: image['#text'], width: LastfmTransform.LImageSizeToWidth[image.size]}))
         };
     }
 }

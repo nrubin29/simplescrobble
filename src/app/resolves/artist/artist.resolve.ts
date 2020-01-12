@@ -10,6 +10,6 @@ export class ArtistResolve implements Resolve<Artist> {
   constructor(private backendService: BackendService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Artist> {
-    return this.backendService.getArtist(route.params.name);
+    return this.backendService.getArtist(route.params.id);
   }
 }
