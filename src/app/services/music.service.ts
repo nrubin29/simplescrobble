@@ -1,4 +1,4 @@
-interface MusicService {
+export interface MusicService {
     // search(type: 'track' | 'artist' | 'album', q: string, limit: number, page: number): Promise<SearchResult<Searchable>>;
     searchTracks(q: string, limit: number, page: number): Promise<SearchResult<Track>>;
     searchAlbums(q: string, limit: number, page: number): Promise<SearchResult<Album>>;

@@ -3,6 +3,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import { environment } from '../../../environments/environment';
 import SpotifyTransform from '../../../types/transform/spotify.transform';
 import env from '../../../../env';
+import {MusicService} from '../music.service';
 
 @Injectable({
   providedIn: 'root'

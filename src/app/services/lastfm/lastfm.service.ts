@@ -4,6 +4,7 @@ import env from '../../../../env';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import LastfmTransform from '../../../types/transform/lastfm.transform';
+import {MusicService} from '../music.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class LastfmService implements MusicService {
     const hash = Object.keys(allHashData).sort().map(key => key + allHashData[key]).join('') + env.apiSecret;
     const signature = md5(hash);
     const allUrlData = Object.assign({}, allHashData, {api_sig: signature});
-    return this.base + '?format=json&' + Object.keys(allUrlData).sort().map(key => key + '=' + (encode.indexOf(key) !== -1 ? this.encode(allUrlData[key]) : allUrlData[key])).join('&');
+    return this.base + '?format=json&' + Object.keys(allUrlData).sort().map(key => key + '=' + (encode.indexOf(key.replace(/\[\d+]/g, '')) !== -1 ? this.encode(allUrlData[key]) : allUrlData[key])).join('&');
   }
 
   authenticate(token: string): Promise<LAuthenticationResponse> {
