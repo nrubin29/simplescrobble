@@ -2,7 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { LastfmService } from '../../services/lastfm/lastfm.service';
 import * as moment from 'moment';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-scrobble',

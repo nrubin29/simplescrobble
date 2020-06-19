@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import {MatButtonToggleChange, MatButtonToggleGroup, MatDialog, MatPaginator, PageEvent} from '@angular/material';
+import { MatButtonToggleChange, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import {ScrobbleComponent} from '../../components/scrobble/scrobble.component';

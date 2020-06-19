@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EntityUtil } from '../../../types/entity-util';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {ScrobbleComponent} from '../../components/scrobble/scrobble.component';
 import {MultiScrobbleComponent} from '../../components/multi-scrobble/multi-scrobble.component';
 

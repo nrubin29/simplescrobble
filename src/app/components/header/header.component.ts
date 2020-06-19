@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LastfmService} from '../../services/lastfm/lastfm.service';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {ScrobbleComponent} from '../scrobble/scrobble.component';
 
