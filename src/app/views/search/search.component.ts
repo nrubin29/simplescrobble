@@ -59,6 +59,12 @@ export class SearchComponent implements OnInit {
       }
     }
 
+    else if (event.value === 'lastfm') {
+      if (this.formGroup.value['type'] === 'playlist') {
+        this.formGroup.patchValue({type: 'track'});
+      }
+    }
+
     this.backendService.service = event.value;
   }
 
@@ -126,6 +132,10 @@ export class SearchComponent implements OnInit {
 
     else if (result.type === 'album') {
       this.router.navigate(['album', result.artist, result.id]);
+    }
+
+    else if (result.type === 'playlist') {
+      this.router.navigate(['playlist', result.id]);
     }
   }
 }

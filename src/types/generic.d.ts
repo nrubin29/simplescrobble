@@ -1,5 +1,6 @@
-type Entity = Track | Album | Artist | User;
-type Searchable = Track | Album | Artist;
+type Entity = Track | Album | Artist | Playlist | User;
+type Searchable = Track | Album | Artist | Playlist;
+type MultiScrobblable = Album | Playlist;
 
 interface PaginatedData<T extends Searchable> {
   [page: number]: T[];
@@ -47,4 +48,12 @@ interface User {
   type: 'user';
   name: string;
   images: Image[];
+}
+
+interface Playlist {
+  type: 'playlist';
+  name: string;
+  id: string;
+  images: Image[];
+  tracks?: Track[];
 }

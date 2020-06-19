@@ -36,6 +36,7 @@ import {ChunkPipe} from './pipes/chunk.pipe';
 import { SpotifyComponent } from './views/spotify/spotify.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MultiScrobbleComponent} from './components/multi-scrobble/multi-scrobble.component';
+import {PlaylistComponent} from './views/playlist/playlist.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {MultiScrobbleComponent} from './components/multi-scrobble/multi-scrobble
     AlbumComponent,
     HeaderComponent,
     ChunkPipe,
-    SpotifyComponent
+    SpotifyComponent,
+    PlaylistComponent,
   ],
   imports: [
     BrowserModule,

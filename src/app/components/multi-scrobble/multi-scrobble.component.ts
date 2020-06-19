@@ -12,8 +12,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class MultiScrobbleComponent implements OnInit {
   formGroup: FormGroup;
+  dataType: String;
 
-  constructor(private lastfmService: LastfmService, private snackBar: MatSnackBar, private matDialogRef: MatDialogRef<MultiScrobbleComponent>, @Inject(MAT_DIALOG_DATA) private data: Album) { }
+  constructor(private lastfmService: LastfmService, private snackBar: MatSnackBar, private matDialogRef: MatDialogRef<MultiScrobbleComponent>, @Inject(MAT_DIALOG_DATA) private data: MultiScrobblable) {
+    this.dataType = data.type;
+  }
 
   ngOnInit() {
     this.formGroup = new FormGroup({

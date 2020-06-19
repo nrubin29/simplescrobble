@@ -13,7 +13,7 @@ export class BackendService implements MusicService {
     this.service = 'lastfm';
   }
 
-  get activeService() {
+  get activeService(): MusicService {
     if (this.service === 'lastfm') {
       return this.lastfmService;
     }
@@ -31,11 +31,19 @@ export class BackendService implements MusicService {
     return this.activeService.getArtist(id);
   }
 
+  getPlaylist(id: string): Promise<Playlist> {
+    if (this.service === 'spotify') {
+      return this.activeService.getPlaylist(id);
+    }
+
+    throw new Error(`Service ${this.service} doesn\'t support playlists.`);
+  }
+
   getUserInfo(): Promise<User> {
     return this.activeService.getUserInfo();
   }
 
-  search(type: 'track' | 'artist' | 'album', q: string, limit: number, page: number): Promise<SearchResult<Searchable>> {
+  search(type: 'track' | 'artist' | 'album' | 'playlist', q: string, limit: number, page: number): Promise<SearchResult<Searchable>> {
     if (type === 'track') {
       return this.searchTracks(q, limit, page);
     }
@@ -46,6 +54,10 @@ export class BackendService implements MusicService {
 
     else if (type === 'artist') {
       return this.searchArtists(q, limit, page);
+    }
+
+    else if (type === 'playlist') {
+      return this.searchPlaylists(q, limit, page);
     }
   }
 
@@ -59,5 +71,13 @@ export class BackendService implements MusicService {
 
   searchTracks(q: string, limit: number, page: number): Promise<SearchResult<Track>> {
     return this.activeService.searchTracks(q, limit, page);
+  }
+
+  searchPlaylists(q: string, limit: number, page: number): Promise<SearchResult<Playlist>> {
+    if (this.service === 'spotify') {
+      return this.activeService.searchPlaylists(q, limit, page);
+    }
+
+    throw new Error(`Service ${this.service} doesn\'t support playlists.`);
   }
 }

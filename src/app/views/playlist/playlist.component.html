@@ -1,0 +1,8 @@
+<mat-card class="banner">
+  <img [src]="img" width="100px" />
+  <div>
+    <h2>{{playlist.name}}</h2>
+    <button mat-button (click)="scrobble()"><mat-icon>playlist_add</mat-icon> Scrobble Playlist</button>
+  </div>
+</mat-card>
+<app-list-view [currentResults]="playlist.tracks" [descriptor]="false" [image]="false" (click)="onClick($event)"></app-list-view>

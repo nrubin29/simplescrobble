@@ -17,6 +17,9 @@
     <mat-button-toggle matTooltip="Album" value="album">
       <mat-icon>album</mat-icon>
     </mat-button-toggle>
+    <mat-button-toggle matTooltip="Playlist" value="playlist" *ngIf="service.value == 'spotify'">
+      <mat-icon>queue_music</mat-icon>
+    </mat-button-toggle>
   </mat-button-toggle-group>
   <mat-form-field color="accent">
     <input matInput formControlName="query" type="text" placeholder="Query">

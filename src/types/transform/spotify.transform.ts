@@ -5,6 +5,8 @@ import AlbumObjectSimplified = SpotifyApi.AlbumObjectSimplified;
 import ArtistObjectSimplified = SpotifyApi.ArtistObjectSimplified;
 import PagingObject = SpotifyApi.PagingObject;
 import TrackObjectSimplified = SpotifyApi.TrackObjectSimplified;
+import PlaylistObjectFull = SpotifyApi.PlaylistObjectFull;
+import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
 
 export default class SpotifyTransform {
     static transformAlbum(album: AlbumObjectSimplified, tracks?: PagingObject<TrackObjectSimplified>): Album {
@@ -75,6 +77,27 @@ export default class SpotifyTransform {
             duration: track.duration_ms / 1000
         };
     }
+
+  static transformSimplePlaylist(playlist: PlaylistObjectSimplified): Playlist {
+    return {
+      type: 'playlist',
+      name: playlist.name,
+      id: playlist.id,
+      images: playlist.images
+    };
+  }
+
+  static transformPlaylist(playlist: PlaylistObjectFull): Playlist {
+    return {
+      type: 'playlist',
+      name: playlist.name,
+      id: playlist.id,
+      images: playlist.images,
+      tracks: playlist.tracks.items
+        .filter(track => track.track.type === 'track')
+        .map(track => SpotifyTransform.transformTrack(track.track as TrackObjectFull))
+    };
+  }
 
     static transformUser(user: UserObjectPrivate): User {
         return {

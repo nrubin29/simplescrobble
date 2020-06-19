@@ -57,6 +57,10 @@ export class SpotifyService implements MusicService {
     return SpotifyTransform.transformArtist(await this.spotify.getArtist(id), await this.spotify.getArtistAlbums(id, {limit: 50})); // TODO: Handle paging properly
   }
 
+  async getPlaylist(id: string): Promise<Playlist> {
+    return SpotifyTransform.transformPlaylist(await this.spotify.getPlaylist(id)); // TODO: Handle paging properly
+  }
+
   async getUserInfo(): Promise<User> {
     return undefined; // TODO: Implement this (maybe).
   }
@@ -82,6 +86,14 @@ export class SpotifyService implements MusicService {
     return {
       count: results.tracks.total,
       results: results.tracks.items.map(track => SpotifyTransform.transformTrack(track))
+    };
+  }
+
+  async searchPlaylists(q: string, limit: number, page: number): Promise<SearchResult<Playlist>> {
+    const results = await this.spotify.searchPlaylists(q); // , {limit: limit, offset: page});
+    return {
+      count: results.playlists.total,
+      results: results.playlists.items.map(playlist => SpotifyTransform.transformSimplePlaylist(playlist))
     };
   }
 }

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Scrobble Album</h1>
+<h1 mat-dialog-title>Scrobble {{dataType|titlecase}}</h1>
 <form #form="ngForm" [formGroup]="formGroup" (submit)="submit(form)">
   <mat-dialog-content>
     <mat-checkbox formControlName="custom">Custom datetime</mat-checkbox>
