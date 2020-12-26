@@ -5,7 +5,7 @@ import { AlbumResolve } from './album.resolve';
 describe('AlbumResolve', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AlbumResolve]
+      providers: [AlbumResolve],
     });
   });
 

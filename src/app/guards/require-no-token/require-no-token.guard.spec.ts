@@ -5,11 +5,14 @@ import { RequireNoTokenGuard } from './require-no-token.guard';
 describe('RequireNoTokenGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RequireNoTokenGuard]
+      providers: [RequireNoTokenGuard],
     });
   });
 
-  it('should ...', inject([RequireNoTokenGuard], (guard: RequireNoTokenGuard) => {
-    expect(guard).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [RequireNoTokenGuard],
+    (guard: RequireNoTokenGuard) => {
+      expect(guard).toBeTruthy();
+    }
+  ));
 });

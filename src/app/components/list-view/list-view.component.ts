@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {EntityUtil} from '../../../types/entity-util';
+import { EntityUtil } from '../../../types/entity-util';
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.scss']
+  styleUrls: ['./list-view.component.scss'],
 })
 export class ListViewComponent implements OnInit {
   @Input() currentResults: Searchable[];
@@ -11,10 +11,9 @@ export class ListViewComponent implements OnInit {
   @Input() descriptor = true;
   @Output() click = new EventEmitter<Searchable>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onClick(result: Searchable) {
     this.click.emit(result);

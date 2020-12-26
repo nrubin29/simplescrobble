@@ -28,7 +28,7 @@ interface LTrack extends LTrackMatch {
     url: string;
     image: LImage[];
     '@attr': {
-      'position': string;
+      position: string;
     };
   };
   toptags: {

@@ -5,11 +5,14 @@ import { PlaylistResolve } from './playlist.resolve';
 describe('PlaylistResolve', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PlaylistResolve]
+      providers: [PlaylistResolve],
     });
   });
 
-  it('should be created', inject([PlaylistResolve], (service: PlaylistResolve) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [PlaylistResolve],
+    (service: PlaylistResolve) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

@@ -22,15 +22,15 @@ interface LArtist extends LArtistMatch {
       '#text': string;
       href: string;
       rel: string;
-    }[]
+    }[];
   };
 }
 
 interface LArtistSearchResponse {
   results: {
     '@attr': {
-      for: string
-    }
+      for: string;
+    };
     opensearch: {
       '#text': string;
       role: 'request';

@@ -2,18 +2,27 @@
   <mat-toolbar-row>
     <a routerLink="/">simplescrobble</a>
     <ng-container *ngIf="user">
-      <button mat-button class="manual-button" (click)="manualScrobble()"><mat-icon>playlist_add</mat-icon> Manual</button>
+      <button mat-button class="manual-button" (click)="manualScrobble()">
+        <mat-icon>playlist_add</mat-icon> Manual
+      </button>
     </ng-container>
     <span class="spacer"></span>
     <ng-container *ngIf="user">
       <button mat-button class="user-button" [matMenuTriggerFor]="appMenu">
         <img [src]="user.images[0].url" />
-        <span class="welcome">Welcome, {{user.name}}</span>
+        <span class="welcome">Welcome, {{ user.name }}</span>
       </button>
     </ng-container>
   </mat-toolbar-row>
 </mat-toolbar>
-<mat-menu #appMenu="matMenu" [overlapTrigger]="false" xPosition="before" yPosition="below">
-  <button mat-menu-item disabled class="welcome-button" *ngIf="user">Welcome, {{user.name}}</button>
+<mat-menu
+  #appMenu="matMenu"
+  [overlapTrigger]="false"
+  xPosition="before"
+  yPosition="below"
+>
+  <button mat-menu-item disabled class="welcome-button" *ngIf="user">
+    Welcome, {{ user.name }}
+  </button>
   <button mat-menu-item (click)="logOut()">Log Out</button>
 </mat-menu>

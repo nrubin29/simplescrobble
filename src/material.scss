@@ -10,13 +10,17 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://www.google.com/design/spec/style/color.html
 $codelm-app-primary: mat-palette($mat-blue, 800, 700, 900);
-$codelm-app-accent:  mat-palette($mat-light-blue, 600, 500, 700);
+$codelm-app-accent: mat-palette($mat-light-blue, 600, 500, 700);
 
 // The warn palette is optional (defaults to red).
-$codelm-app-warn:    mat-palette($mat-red);
+$codelm-app-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$codelm-app-theme: mat-light-theme($codelm-app-primary, $codelm-app-accent, $codelm-app-warn);
+$codelm-app-theme: mat-light-theme(
+  $codelm-app-primary,
+  $codelm-app-accent,
+  $codelm-app-warn
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component

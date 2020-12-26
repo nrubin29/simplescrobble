@@ -1,7 +1,15 @@
 <mat-nav-list #navList>
-  <mat-list-item *ngFor="let result of currentResults; let i = index" (click)="onClick(result)">
+  <mat-list-item
+    *ngFor="let result of currentResults; let i = index"
+    (click)="onClick(result)"
+  >
     <img mat-list-avatar *ngIf="image" [src]="img(result)" />
-    <p mat-list-avatar class="num" *ngIf="!image">{{i + 1}}</p>
-    <h4 mat-line>{{result.name}}<span style="color: gray" *ngIf="getDescriptor(result)"> - {{getDescriptor(result)}}</span></h4>
+    <p mat-list-avatar class="num" *ngIf="!image">{{ i + 1 }}</p>
+    <h4 mat-line>
+      {{ result.name
+      }}<span style="color: gray;" *ngIf="getDescriptor(result)">
+        - {{ getDescriptor(result) }}</span
+      >
+    </h4>
   </mat-list-item>
 </mat-nav-list>

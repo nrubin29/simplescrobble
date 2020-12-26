@@ -8,9 +8,8 @@ describe('ScrobbleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScrobbleComponent ]
-    })
-    .compileComponents();
+      declarations: [ScrobbleComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

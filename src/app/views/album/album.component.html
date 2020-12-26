@@ -1,9 +1,18 @@
 <mat-card class="banner">
   <img [src]="img" width="100px" />
   <div>
-    <h2>{{album.name}}</h2>
-    <h4><a [routerLink]="['/artist', album.artistId]">{{album.artist}}</a></h4>
-    <button mat-button (click)="scrobble()"><mat-icon>playlist_add</mat-icon> Scrobble Album</button>
+    <h2>{{ album.name }}</h2>
+    <h4>
+      <a [routerLink]="['/artist', album.artistId]">{{ album.artist }}</a>
+    </h4>
+    <button mat-button (click)="scrobble()">
+      <mat-icon>playlist_add</mat-icon> Scrobble Album
+    </button>
   </div>
 </mat-card>
-<app-list-view [currentResults]="album.tracks" [descriptor]="false" [image]="false" (click)="onClick($event)"></app-list-view>
+<app-list-view
+  [currentResults]="album.tracks"
+  [descriptor]="false"
+  [image]="false"
+  (click)="onClick($event)"
+></app-list-view>

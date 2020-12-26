@@ -5,7 +5,7 @@ import { LastfmService } from './lastfm.service';
 describe('LastfmService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LastfmService]
+      providers: [LastfmService],
     });
   });
 

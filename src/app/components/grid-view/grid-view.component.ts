@@ -1,10 +1,17 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {EntityUtil} from '../../../types/entity-util';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { EntityUtil } from '../../../types/entity-util';
 
 @Component({
   selector: 'app-grid-view',
   templateUrl: './grid-view.component.html',
-  styleUrls: ['./grid-view.component.scss']
+  styleUrls: ['./grid-view.component.scss'],
 })
 export class GridViewComponent implements OnInit {
   @Input() currentResults: Searchable[];
@@ -12,10 +19,10 @@ export class GridViewComponent implements OnInit {
   @Output() click = new EventEmitter<Searchable>();
   chunk: number;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    this.resize({target: window});
+    this.resize({ target: window });
   }
 
   @HostListener('window:resize', ['$event'])

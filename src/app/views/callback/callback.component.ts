@@ -5,10 +5,14 @@ import { LastfmService } from '../../services/lastfm/lastfm.service';
 @Component({
   selector: 'app-callback',
   templateUrl: './callback.component.html',
-  styleUrls: ['./callback.component.scss']
+  styleUrls: ['./callback.component.scss'],
 })
 export class CallbackComponent implements OnInit {
-  constructor(private lastfmService: LastfmService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private lastfmService: LastfmService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {

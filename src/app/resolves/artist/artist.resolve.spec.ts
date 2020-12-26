@@ -5,7 +5,7 @@ import { ArtistResolve } from './artist.resolve';
 describe('ArtistResolve', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ArtistResolve]
+      providers: [ArtistResolve],
     });
   });
 

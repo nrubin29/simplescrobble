@@ -16,7 +16,8 @@ app-grid-view {
   margin: 0 1em;
 }
 
-a, img {
+a,
+img {
   margin-right: 1em;
 }
 
@@ -25,6 +26,7 @@ app-list-view {
 }
 
 // Hotfix for title being vertically misaligned.
-.mat-card-content>:last-child:not(.mat-card-footer), .mat-card>:last-child:not(.mat-card-footer) {
+.mat-card-content > :last-child:not(.mat-card-footer),
+.mat-card > :last-child:not(.mat-card-footer) {
   margin: auto 0;
 }

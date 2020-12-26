@@ -5,12 +5,12 @@ import { EntityUtil } from '../../../types/entity-util';
 @Component({
   selector: 'app-artist',
   templateUrl: './artist.component.html',
-  styleUrls: ['./artist.component.scss']
+  styleUrls: ['./artist.component.scss'],
 })
 export class ArtistComponent implements OnInit {
   artist: Artist;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.route.data.subscribe(data => {

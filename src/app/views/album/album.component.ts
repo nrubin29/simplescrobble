@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EntityUtil } from '../../../types/entity-util';
 import { MatDialog } from '@angular/material/dialog';
-import {ScrobbleComponent} from '../../components/scrobble/scrobble.component';
-import {MultiScrobbleComponent} from '../../components/multi-scrobble/multi-scrobble.component';
+import { ScrobbleComponent } from '../../components/scrobble/scrobble.component';
+import { MultiScrobbleComponent } from '../../components/multi-scrobble/multi-scrobble.component';
 
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
-  styleUrls: ['./album.component.scss']
+  styleUrls: ['./album.component.scss'],
 })
 export class AlbumComponent implements OnInit {
   album: Album;
 
-  constructor(private matDialog: MatDialog, private route: ActivatedRoute) { }
+  constructor(private matDialog: MatDialog, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -30,10 +30,12 @@ export class AlbumComponent implements OnInit {
       return;
     }
 
-    this.matDialog.open(ScrobbleComponent, {data: {...track, album: {name: this.album.name}}});
+    this.matDialog.open(ScrobbleComponent, {
+      data: { ...track, album: { name: this.album.name } },
+    });
   }
 
   scrobble() {
-    this.matDialog.open(MultiScrobbleComponent, {data: this.album});
+    this.matDialog.open(MultiScrobbleComponent, { data: this.album });
   }
 }

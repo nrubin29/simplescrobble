@@ -12,7 +12,7 @@ interface LAlbum extends LAlbumMatch {
   artist: string;
   playcount: string;
   tracks: {
-    track: LTrackMatch[]
+    track: LTrackMatch[];
   };
   tags: {
     tag: {
@@ -30,8 +30,8 @@ interface LAlbum extends LAlbumMatch {
 interface LAlbumSearchResponse {
   results: {
     '@attr': {
-      for: string
-    }
+      for: string;
+    };
     'opensearch:Query': {
       '#text': string;
       role: 'request';

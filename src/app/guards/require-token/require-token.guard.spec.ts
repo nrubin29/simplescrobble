@@ -5,7 +5,7 @@ import { RequireTokenGuard } from './require-token.guard';
 describe('RequireTokenGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RequireTokenGuard]
+      providers: [RequireTokenGuard],
     });
   });
 

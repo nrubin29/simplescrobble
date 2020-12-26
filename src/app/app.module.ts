@@ -32,11 +32,11 @@ import { GridViewComponent } from './components/grid-view/grid-view.component';
 import { ArtistComponent } from './views/artist/artist.component';
 import { AlbumComponent } from './views/album/album.component';
 import { HeaderComponent } from './components/header/header.component';
-import {ChunkPipe} from './pipes/chunk.pipe';
+import { ChunkPipe } from './pipes/chunk.pipe';
 import { SpotifyComponent } from './views/spotify/spotify.component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {MultiScrobbleComponent} from './components/multi-scrobble/multi-scrobble.component';
-import {PlaylistComponent} from './views/playlist/playlist.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MultiScrobbleComponent } from './components/multi-scrobble/multi-scrobble.component';
+import { PlaylistComponent } from './views/playlist/playlist.component';
 
 @NgModule({
   declarations: [
@@ -79,15 +79,10 @@ import {PlaylistComponent} from './views/playlist/playlist.component';
     MatButtonToggleModule,
     MatTooltipModule,
     MatDialogModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
-  entryComponents: [
-    ScrobbleComponent,
-    MultiScrobbleComponent
-  ],
-  providers: [
-    ChunkPipe
-  ],
-  bootstrap: [AppComponent]
+  entryComponents: [ScrobbleComponent, MultiScrobbleComponent],
+  providers: [ChunkPipe],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
