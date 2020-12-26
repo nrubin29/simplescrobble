@@ -9,6 +9,8 @@ import { BackendService } from '../../services/backend/backend.service';
   styleUrls: ['./spotify.component.scss'],
 })
 export class SpotifyComponent implements OnInit {
+  error: string;
+
   constructor(
     private spotifyService: SpotifyService,
     private backendService: BackendService,
@@ -17,14 +19,16 @@ export class SpotifyComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.fragment.subscribe(fragment => {
-      const data = new URLSearchParams(fragment);
-      this.spotifyService.setToken(
-        data.get('access_token'),
-        parseInt(data.get('expires_in'), 10)
-      );
+    this.route.queryParamMap.subscribe(async queryParams => {
+      if (queryParams.has('error')) {
+        this.error = queryParams.get('error');
+        return;
+      }
+
+      await this.spotifyService.getAccessToken(queryParams.get('code'));
+
       this.backendService.service = 'spotify';
-      this.router.navigate(['/']);
+      await this.router.navigate(['/']);
     });
   }
 }

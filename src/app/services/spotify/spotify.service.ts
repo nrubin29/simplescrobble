@@ -4,6 +4,16 @@ import { environment } from '../../../environments/environment';
 import SpotifyTransform from '../../../types/transform/spotify.transform';
 import env from '../../../../env';
 import { MusicService } from '../music.service';
+import { create as createPkcePair } from 'pkce';
+import { HttpClient, HttpParams } from '@angular/common/http';
+
+interface SpotifyTokenResponse {
+  access_token: string;
+  token_type: 'Bearer';
+  expires_in: number;
+  refresh_token: string;
+  scope: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -11,51 +21,107 @@ import { MusicService } from '../music.service';
 export class SpotifyService implements MusicService {
   private spotify: SpotifyWebApi.SpotifyWebApiJs;
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     this.spotify = new SpotifyWebApi();
 
-    if (this.accessToken) {
-      this.spotify.setAccessToken(this.accessToken);
+    const accessToken = localStorage.getItem('spotify_access_token');
+    if (accessToken) {
+      this.spotify.setAccessToken(accessToken);
     }
   }
 
+  /**
+   * 1. Create the code verifier and challenge
+   * 2. Construct the authorization URI
+   * 3. Your app redirects the user to the authorization URI
+   */
   authenticate() {
+    const {
+      codeVerifier,
+      codeChallenge,
+    }: { codeVerifier: string; codeChallenge: string } = createPkcePair();
+    localStorage.setItem('code_verifier', codeVerifier);
+
     const args = {
       client_id: env.spotifyClientID,
-      response_type: 'token',
-      redirect_uri: encodeURIComponent(environment.baseUrl) + '/spotify',
+      response_type: 'code',
+      redirect_uri: environment.baseUrl + '/spotify',
+      code_challenge_method: 'S256',
+      code_challenge: codeChallenge,
       // TODO: state
     };
 
-    location.href =
-      'https://accounts.spotify.com/authorize?' +
-      Object.keys(args)
-        .map(key => key + '=' + args[key])
-        .join('&');
+    const url = new URL('https://accounts.spotify.com/authorize');
+    Object.entries(args).forEach(([key, value]) => {
+      url.searchParams.append(key, value);
+    });
+    location.href = url.href;
   }
 
-  get accessToken() {
-    return localStorage.getItem('spotify_access_token');
+  /**
+   * 4. Your app exchanges the code for an access token
+   */
+  async getAccessToken(code: string) {
+    const payload = new HttpParams()
+      .set('client_id', env.spotifyClientID)
+      .set('grant_type', 'authorization_code')
+      .set('code', code)
+      .set('redirect_uri', environment.baseUrl + '/spotify')
+      .set('code_verifier', localStorage.getItem('code_verifier'));
+
+    const response = await this.httpClient
+      .post<SpotifyTokenResponse>(
+        'https://accounts.spotify.com/api/token',
+        payload
+      )
+      .toPromise();
+
+    this.handleTokenResponse(response);
+  }
+
+  handleTokenResponse(response: SpotifyTokenResponse) {
+    this.spotify.setAccessToken(response.access_token);
+    localStorage.setItem('spotify_access_token', response.access_token);
+    localStorage.setItem('spotify_refresh_token', response.refresh_token);
+    localStorage.setItem(
+      'spotify_expires',
+      new Date()
+        .setSeconds(new Date().getSeconds() + response.expires_in)
+        .toString()
+    );
   }
 
   get expires() {
     return new Date(parseInt(localStorage.getItem('spotify_expires'), 10));
   }
 
-  isAuthenticated() {
-    return (
+  async isAuthenticated() {
+    if (
       localStorage.getItem('spotify_access_token') &&
       new Date().getTime() < this.expires.getTime()
-    );
-  }
+    ) {
+      return true;
+    }
 
-  setToken(token: string, expiresIn: number) {
-    this.spotify.setAccessToken(token);
-    localStorage.setItem('spotify_access_token', token);
-    localStorage.setItem(
-      'spotify_expires',
-      new Date().setSeconds(new Date().getSeconds() + expiresIn).toString()
-    );
+    if (!localStorage.getItem('spotify_refresh_token')) {
+      return false;
+    }
+
+    // 6. Requesting a refreshed access token
+    const payload = new HttpParams()
+      .set('grant_type', 'refresh_token')
+      .set('refresh_token', localStorage.getItem('spotify_refresh_token'))
+      .set('client_id', env.spotifyClientID);
+
+    const response = await this.httpClient
+      .post<SpotifyTokenResponse>(
+        'https://accounts.spotify.com/api/token',
+        payload
+      )
+      .toPromise();
+
+    this.handleTokenResponse(response);
+    return true;
   }
 
   async getAlbum(artistId: string, id: string): Promise<Album> {

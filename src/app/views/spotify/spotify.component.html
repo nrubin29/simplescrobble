@@ -1,1 +1,4 @@
-<p>Please wait...</p>
+<p *ngIf="error; else noError">{{ error }}</p>
+<ng-template #noError>
+  <p>Please wait...</p>
+</ng-template>

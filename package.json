@@ -30,6 +30,7 @@
     "md5": "^2.2.1",
     "moment": "^2.27.0",
     "ng-pick-datetime": "^7.0.0",
+    "pkce": "^1.0.0-beta2",
     "rxjs": "^6.5.5",
     "spotify-web-api-js": "^1.4.0",
     "tslib": "^1.10.0",

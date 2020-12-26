@@ -66,9 +66,9 @@ export class SearchComponent implements OnInit {
     this.previousPageSize = 10;
   }
 
-  serviceChange(event: MatButtonToggleChange) {
+  async serviceChange(event: MatButtonToggleChange) {
     if (event.value === 'spotify') {
-      if (!this.spotifyService.isAuthenticated()) {
+      if (!(await this.spotifyService.isAuthenticated())) {
         this.service.value = 'lastfm';
         this.spotifyService.authenticate();
         return;
