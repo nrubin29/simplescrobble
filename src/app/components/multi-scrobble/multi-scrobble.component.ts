@@ -32,7 +32,7 @@ export class MultiScrobbleComponent implements OnInit {
       timestamps.push(timestamps[timestamps.length - 1] + track.duration);
     }
 
-    this.lastfmService.scrobble(this.data.tracks.map(track => ({album: this.data.name, artist: track.artist.name, name: track.name})), timestamps).then(data => {
+    this.lastfmService.scrobble(this.data.tracks.map(track => ({album: track.album.name, artist: track.artist.name, name: track.name})), timestamps).then(data => {
       this.matDialogRef.close();
       this.snackBar.open(data.scrobbles['@attr'].accepted > 0 ? 'Success!' : 'Failed.', undefined, {
         duration: 3000,
