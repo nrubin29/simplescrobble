@@ -2,24 +2,46 @@ import { Injectable } from '@angular/core';
 import { LastfmService } from '../lastfm/lastfm.service';
 import { SpotifyService } from '../spotify/spotify.service';
 import { MusicService } from '../music.service';
+import { BehaviorSubject } from 'rxjs';
+
+type Service = 'lastfm' | 'spotify';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BackendService implements MusicService {
-  service: 'lastfm' | 'spotify';
+  service = new BehaviorSubject<Service>('lastfm');
 
   constructor(
     private lastfmService: LastfmService,
     private spotifyService: SpotifyService
   ) {
-    this.service = 'lastfm';
+    this.loadService();
+  }
+
+  private async loadService() {
+    if (localStorage.getItem('service')) {
+      let service = localStorage.getItem('service') as Service;
+
+      if (
+        service === 'spotify' &&
+        !(await this.spotifyService.isAuthenticated())
+      ) {
+        service = 'lastfm';
+      }
+
+      this.service.next(service);
+    }
+
+    this.service.subscribe(newService => {
+      localStorage.setItem('service', newService);
+    });
   }
 
   get activeService(): MusicService {
-    if (this.service === 'lastfm') {
+    if (this.service.getValue() === 'lastfm') {
       return this.lastfmService;
-    } else if (this.service === 'spotify') {
+    } else if (this.service.getValue() === 'spotify') {
       return this.spotifyService;
     }
   }
@@ -33,7 +55,7 @@ export class BackendService implements MusicService {
   }
 
   getPlaylist(id: string): Promise<Playlist> {
-    if (this.service === 'spotify') {
+    if (this.service.getValue() === 'spotify') {
       return this.activeService.getPlaylist(id);
     }
 
@@ -90,7 +112,7 @@ export class BackendService implements MusicService {
     limit: number,
     page: number
   ): Promise<SearchResult<Playlist>> {
-    if (this.service === 'spotify') {
+    if (this.service.getValue() === 'spotify') {
       return this.activeService.searchPlaylists(q, limit, page);
     }
 

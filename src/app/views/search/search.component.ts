@@ -52,7 +52,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = new FormGroup({
-      service: new FormControl(this.backendService.service || 'lastfm'),
+      service: new FormControl(this.backendService.service.getValue()),
       type: new FormControl('track'),
       query: new FormControl(environment.testQuery),
     });
@@ -64,6 +64,10 @@ export class SearchComponent implements OnInit {
       length: 0,
     };
     this.previousPageSize = 10;
+
+    this.backendService.service.subscribe(service => {
+      this.formGroup.patchValue({ service });
+    });
   }
 
   async serviceChange(event: MatButtonToggleChange) {
@@ -79,7 +83,7 @@ export class SearchComponent implements OnInit {
       }
     }
 
-    this.backendService.service = event.value;
+    this.backendService.service.next(event.value);
   }
 
   get currentResults(): Searchable[] {

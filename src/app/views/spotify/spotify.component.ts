@@ -27,7 +27,7 @@ export class SpotifyComponent implements OnInit {
 
       await this.spotifyService.getAccessToken(queryParams.get('code'));
 
-      this.backendService.service = 'spotify';
+      this.backendService.service.next('spotify');
       await this.router.navigate(['/']);
     });
   }
