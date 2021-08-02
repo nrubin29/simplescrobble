@@ -1,26 +1,13 @@
-:host,
-.left {
+a {
   display: flex;
   align-items: center;
-}
-
-:host {
-  justify-content: space-between;
-  background: #1565c0;
-  padding: 0.5em 1em;
-  border-radius: 1em;
-  margin-bottom: 1em;
-}
-
-img {
-  margin-right: 0.5em;
-}
-
-a {
+  background: #0d47a1;
+  padding: 1em;
   color: white;
   text-decoration: none;
 }
 
-mat-icon {
-  color: white;
+img {
+  border-radius: 22.37%;
+  margin-right: 1em;
 }
