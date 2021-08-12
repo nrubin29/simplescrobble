@@ -2,9 +2,7 @@
 
 simplescrobble is a free Last.fm scrobbler with support for advanced features. Check it out at [simplescrobble.com](http://simplescrobble.com) or run your own instance!
 
-**Note**: simplescrobble is no longer supported and I will no longer be hosting it starting on September 1. All of the features of simplescrobble*--and many more--are available in my new app, Finale, for iOS, Android, and the web. Click [here](https://finale.app) to check it out!
-
-\* Spotify playlist scrobbling coming soon
+**Note**: simplescrobble is no longer supported and I will no longer be hosting it starting on September 1. All the features of simplescrobble--and many more--are available in my new app, Finale, for iOS, Android, and the web. Click [here](https://finale.app) to check it out!
 
 ## Features
 
